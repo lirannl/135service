@@ -18,8 +18,8 @@ function rejectEmpty(path: string) {
     });
 }
 
-rejectEmpty('/decrypt');
 rejectEmpty('/encrypt');
 router.post('/encrypt', encrypt);
+rejectEmpty('/decrypt');
 router.post('/decrypt', decrypt);
 router.get('/funcs', getFuncs);
