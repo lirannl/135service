@@ -1,0 +1,70 @@
+.App {
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.pageContent {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.disclaimer {
+  font-size: small;
+  display: block;
+  width: 98vw;
+}
+.credits {
+  margin-top: 6pt;
+  margin-bottom: 6pt;
+  font-size: small;
+}
+
+.fullDetails {
+  text-align: start;
+  margin: 40pt;
+  font-size: smaller;
+  font-weight: lighter;
+}
+
+.betaTag {
+  color: rgb(197, 22, 22);
+  text-align: start;
+  font-style: italic;
+  font-size: small;
+}
+
+#OutputField {
+  width: 80vw;
+}
+
+a {
+  color: #61dafb;
+  font-size: small;
+}
