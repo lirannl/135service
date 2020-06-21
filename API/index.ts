@@ -14,9 +14,11 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 console.log(`Listening on ${HOST}:${PORT}`);
-await app.listen({
+if (CERTPATH || KEYPATH) await app.listen({
     port: PORT,
     secure: true,
     certFile: CERTPATH,
     keyFile: KEYPATH
 });
+// If no certificates are specified, don't use https, and assume that the API runnning in development, meaning only localhost should have access
+else await app.listen(`localhost:${PORT}`);
