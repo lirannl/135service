@@ -53,7 +53,7 @@ export async function safeSelect(event){
   }
 }
 
-export function C135Cipher(props){
+export default function C135Cipher(props){
 const classes = props.classesp;
 const setResult = props.setResultp;
 const sendInput = props.sendInputp;

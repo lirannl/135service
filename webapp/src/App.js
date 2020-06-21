@@ -2,15 +2,11 @@
 import crypto from './requests/requester';
 import React from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { Route, BrowserRouter, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 import './App.css';
 import { useState } from 'react';
-import { C135Cipher } from './pages/algorithms/135cipher.jsx';
-import { Disclaimer } from './pages/disclaimer.jsx';
-import { Privacy } from './pages/privacy.jsx';
 import { Link } from 'react-router-dom';
-import { NotFound } from './pages/notfound.jsx';
-import { GlobalAbout } from './pages/about.jsx';
+import { Routes } from './routes.jsx';
 
 function sendInput(key, text, encryptMode, result, setResult, setResLabel) {
   if (key === '' || text === '')
@@ -57,21 +53,8 @@ function App() {
     <BrowserRouter basename='/'><ThemeProvider theme={theme}>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <header className="App-header App">
-      <Switch>
-          <Route exact path="/about"><GlobalAbout /></Route>
-          <Route exact path="/disclaimer"><Disclaimer /></Route>
-          <Route exact path="/privacy"><Privacy /></Route>
-          <Route exact path="/"><C135Cipher 
-  classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} /></Route>
-          <Route path="/135cipher"><Switch>
-            <Route exact path="*/about"></Route>
-            <Route path="/"><C135Cipher 
-  classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} /></Route>
-            </Switch></Route>
-          <Route path="/"><NotFound/></Route>
-        </Switch>
+      <Routes classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
+  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel}/>
       <div className="disclaimer"><span style={{float:"left"}}>Disclaimer: Use at your own risk, <Link to="/disclaimer">read full disclaimer</Link>.</span><span style={{float:"right"}}> <Link to="/privacy">Privacy Policy</Link></span></div>
       <div className="credits">Made by Jamal135 and Liran Piade, 2020</div>
     </header>
