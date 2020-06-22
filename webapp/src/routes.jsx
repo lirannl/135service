@@ -43,6 +43,6 @@ export function Routes(props) {
   setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} /></Route>
     {Object.entries(funcNames).map(fname => <Route key={fname[1]} path={`/${fname[0]}`}>{getModule(fname[0]) // For each path
     .default(classes, setResult, sendInput, key, text, setResLabel, setKey, setText, result, resLabel)}</Route>) /* Call the default function of the module */} 
-    <Route path="/"><NotFound/></Route>
+    <Route path="/">{funcNames.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound/>}</Route>
 </Switch>
 }

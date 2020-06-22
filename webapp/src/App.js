@@ -50,7 +50,7 @@ function App() {
   const [text, setText] = useState('');
   const [result, setResult] = useState('');
   const [resLabel, setResLabel] = useState("Result");
-  const [funcs, setFuncs] = useState({});
+  const [funcs, setFuncs] = useState({unloaded: true});
   const replacements = {
     cipher135: '135cipher'
 };
