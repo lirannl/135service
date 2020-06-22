@@ -1,5 +1,5 @@
 // @ts-nocheck
-export default async function getFuncs()
+export async function getFuncs()
 {
     const requrl = `https://135code.com:8443/funcs`;
 

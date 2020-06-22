@@ -1,6 +1,6 @@
 // @ts-nocheck
 import crypto from './requests/requester';
-import getFuncs from './requests/getFuncs';
+import { getFuncs } from './requests/getFuncs';
 import React from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter } from 'react-router-dom';
@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const replacements = { // When a function's name is in the object's keys, replace it with its value
+  cipher135: '135cipher'
+};
+
 function App() {
   const classes = useStyles();
   const [key, setKey] = useState('');
@@ -51,9 +55,7 @@ function App() {
   const [result, setResult] = useState('');
   const [resLabel, setResLabel] = useState("Result");
   const [funcs, setFuncs] = useState({unloaded: true});
-  const replacements = {
-    cipher135: '135cipher'
-};
+  
 useEffect(() => {
   getFuncs().then(v=>{
     const val = [{}].concat(v).reduce(function(acc, curr) {
@@ -62,7 +64,7 @@ useEffect(() => {
     });
     setFuncs(val);
     });
-}, [replacements]);
+}, []);
 
   return (
     <BrowserRouter basename='/'><ThemeProvider theme={theme}>
