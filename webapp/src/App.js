@@ -1,5 +1,5 @@
 // @ts-nocheck
-import crypto from './requests/requester';
+import query from './requests/requester';
 import { getFuncs } from './requests/getFuncs';
 import React from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -10,17 +10,18 @@ import { Link } from 'react-router-dom';
 import { Routes } from './routes.jsx';
 import { useEffect } from 'react';
 import { NavigationBar } from './components/navbar.jsx';
+import { capitalise } from './utils';
 
-function sendInput(key, text, encryptMode, result, setResult, setResLabel) {
+function sendInput(key, text, mode, algorithm, result, setResult, setResLabel) {
   if (key === '' || text === '')
   {
-    alert(`Sorry, you must input a key and text to ${encryptMode ? "encrypt" : "decrypt"}.`);
+    alert(`Sorry, you must input a key and content to ${mode}.`);
     return result;
   }
   else{
     setResult("Loading...");
-    setResLabel(encryptMode ? "Encrypted text" : "Decrypted text");
-    crypto(encryptMode ? "encrypt" : "decrypt", key, text).then(res => setResult(res)).catch(e => setResult("Failed"));
+    setResLabel(`${capitalise(mode)}ed result`);
+    query(algorithm, mode, key, text).then(res => setResult(res)).catch(e => setResult("Failed"));
   }
 }
 

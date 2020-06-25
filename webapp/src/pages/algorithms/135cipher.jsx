@@ -77,7 +77,7 @@ const resLabel = props.resLabelp;
 
 return <div className="pageContent">
     <h1>135Code cryptography application</h1>
-    <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {setResult(sendInput(key, text, true, result, setResult, setResLabel)); event.preventDefault();}}>
+    <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {setResult(sendInput(key, text, 'encrypt', result, setResult, setResLabel)); event.preventDefault();}}>
       <div>
       <TextField id="keyField" label="key" inputMode="numeric" value={key} onChange={(event) => {
         if (event.target.value.length>135) alert("Key must be up to 135 characters long.");
@@ -88,8 +88,8 @@ return <div className="pageContent">
       <FieldWithPasteButton text={text} setText={setText}/>
       </div>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <Button onClick={event => {setResult(sendInput(key, text, true, result, setResult, setResLabel));}}>Encrypt</Button>
-        <Button onClick={event => {setResult(sendInput(key, text, false, result, setResult, setResLabel));}}>Decrypt</Button>
+        <Button onClick={event => {setResult(sendInput(key, text, 'encrypt', "135cipher", result, setResult, setResLabel));}}>Encrypt</Button>
+        <Button onClick={event => {setResult(sendInput(key, text, 'decrypt', "135cipher", result, setResult, setResLabel));}}>Decrypt</Button>
       </ButtonGroup>
     </form>
     <BetaTag/>
