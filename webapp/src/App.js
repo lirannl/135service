@@ -12,16 +12,17 @@ import { useEffect } from 'react';
 import { NavigationBar } from './components/navbar.jsx';
 import { capitalise } from './utils';
 
-function sendInput(key, text, mode, algorithm, result, setResult, setResLabel) {
+function sendInput(key, text, mode, algorithm, result, setResult, setLoading, setResLabel) {
   if (key === '' || text === '')
   {
     alert(`Sorry, you must input a key and content to ${mode}.`);
     return result;
   }
   else{
+    setLoading(true);
     setResult("Loading...");
     setResLabel(`${capitalise(mode)}ed result`);
-    query(algorithm, mode, key, text).then(res => setResult(res)).catch(e => setResult("Failed"));
+    query(algorithm, mode, key, text).then(res => {setLoading(false); setResult(res);}).catch(e => setResult("Failed"));
   }
 }
 
@@ -56,6 +57,7 @@ function App() {
   const [result, setResult] = useState('');
   const [resLabel, setResLabel] = useState("Result");
   const [funcs, setFuncs] = useState({unloaded: true});
+  const [loading, setLoading] = useState(false);
   
 useEffect(() => {
   getFuncs().then(v=>{
@@ -73,7 +75,7 @@ useEffect(() => {
     <header className="App-header App">
       <NavigationBar funcNames={funcs}/>
       <Routes classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} funcsp={funcs}/>
+  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} funcsp={funcs} loadingp={loading} setLoadingp={setLoading}/>
       <div className="disclaimer"><span style={{float:"left"}}>Disclaimer: Use at your own risk, <Link to="/disclaimer">read full disclaimer</Link>.</span><span style={{float:"right"}}> <Link to="/privacy">Privacy Policy</Link></span></div>
       <div className="credits">Made by Jamal135 and Liran Piade, 2020</div>
     </header>

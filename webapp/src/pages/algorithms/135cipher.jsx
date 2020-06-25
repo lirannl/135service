@@ -3,6 +3,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TextField from '@material-ui/core/TextField';
+import { CircularProgress } from '@material-ui/core';
 import { BetaTag } from '../../components/beta.jsx';
 import { Switch, Route } from 'react-router-dom';
 
@@ -55,11 +56,11 @@ async function safeSelect(event){
 }
 
 // Every algorithm's frontend module must have a default export for handling its' path
-export default function(classes, setResult, sendInput, key, text, setResLabel, setKey, setText, result, resLabel) {
+export default function(classes, setResult, sendInput, key, text, setResLabel, setKey, setText, result, resLabel, loading, setLoading) {
   return <Switch>
     <Route path="*/about"><div className="">About the 135cipher algorithm</div></Route>
     <Route path="/"><C135Cipher classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel}/></Route>
+  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} loadingp={loading} setLoadingp={setLoading}/></Route>
   </Switch>
 }
 
@@ -74,10 +75,16 @@ const setKey = props.setKeyp;
 const setText = props.setTextp;
 const result = props.resultp;
 const resLabel = props.resLabelp;
+const loading = props.loadingp;
+const setLoading = props.setLoadingp;
 
 return <div className="pageContent">
+
     <h1>135Code cryptography application</h1>
-    <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {setResult(sendInput(key, text, 'encrypt', result, setResult, setResLabel)); event.preventDefault();}}>
+    <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
+      setResult(sendInput(key, text, 'encrypt', result, setResult, setLoading, setResLabel)); 
+      event.preventDefault();
+      }}>
       <div>
       <TextField id="keyField" label="key" inputMode="numeric" value={key} onChange={(event) => {
         if (event.target.value.length>135) alert("Key must be up to 135 characters long.");
@@ -88,11 +95,12 @@ return <div className="pageContent">
       <FieldWithPasteButton text={text} setText={setText}/>
       </div>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <Button onClick={event => {setResult(sendInput(key, text, 'encrypt', "135cipher", result, setResult, setResLabel));}}>Encrypt</Button>
-        <Button onClick={event => {setResult(sendInput(key, text, 'decrypt', "135cipher", result, setResult, setResLabel));}}>Decrypt</Button>
+        <Button onClick={event => {setResult(sendInput(key, text, 'encrypt', "135cipher", result, setResult, setLoading, setResLabel));}}>Encrypt</Button>
+        <Button onClick={event => {setResult(sendInput(key, text, 'decrypt', "135cipher", result, setResult, setLoading, setResLabel));}}>Decrypt</Button>
       </ButtonGroup>
     </form>
     <BetaTag/>
     <ReadOnlyTextField result={result} resLabel={resLabel}/>
+    {loading ? <React.Fragment><br/><CircularProgress color="primary" /></React.Fragment>: null}
     </div>;
 }
