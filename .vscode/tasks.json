@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "webapp/",
+			"problemMatcher": [],
+			"label": "npm: start - webapp",
+			"detail": "react-scripts start",
+			"options": {
+				"env": {
+					"REACT_APP_API_URL": "http://localhost:7700"
+				}
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

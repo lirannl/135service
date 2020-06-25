@@ -12,3 +12,5 @@ export const getFuncs = async function (ctx: Context) {
     ctx.response.body = funcs
     .map(f=>f.name.split('.').slice(0, f.name.split('.').length-1).join('.'));
   }
+
+//const modules = [...await Deno.readDirSync(Deno.env.toObject().BIN_DIR)].filter(f=>!f.isDirectory).filter(e=>e.isDirectory);

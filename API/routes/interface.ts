@@ -1,7 +1,7 @@
 import { Context } from "https://deno.land/x/oak/mod.ts";
 import { spawnProgram } from "../pythonProc.ts";
 
-export const py_interface = async function (ctx: Context, mode: string) {
+export const py_interface = async function (ctx: Context, binary: string, mode: string) {
   // Resolve the request's body
   const body = await (await ctx.request.body()).value;
   if(typeof body.key !== "string")
@@ -16,10 +16,11 @@ export const py_interface = async function (ctx: Context, mode: string) {
     ctx.response.body = {message: "The provided key must be an integer."};
     return;
   }
+
   // Start the cryptography program
-  const proc = spawnProgram(mode, body.key);
+  const proc = spawnProgram(binary, mode, body.key);
   // Enter the text
-  await proc.stdin?.write(new TextEncoder().encode(body.text));
+  await proc.stdin?.write(new TextEncoder().encode(body.content));
   await proc.stdin?.close();
   // Define a buffer for error output
   let rawErr: Uint8Array;
@@ -31,6 +32,8 @@ export const py_interface = async function (ctx: Context, mode: string) {
   // Get the program's output
   const rawOutput = await proc.output();
   const outputString = new TextDecoder().decode(rawOutput);
+  ctx.response.status = 200;
+  ctx.response.body = {message: outputString};
   if (code.success) {
     ctx.response.status = 200;
     ctx.response.body = {message: outputString};

@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
-import { router } from "./routes/routes.ts";
+import { router } from "./routes.ts";
 const env = Deno.env.toObject();
 const CERTPATH = env.CERTPATH;
 const KEYPATH = env.KEYPATH;

@@ -1,4 +1,4 @@
-export const spawnProgram = (mode: string, key: string) => Deno.run({
+export const spawnProgram = (operation: string, mode: string, key: string) => Deno.run({
     cmd: [Deno.env.toObject().CODE_BIN , mode, key], 
     stdin:"piped", 
     stdout:"piped",

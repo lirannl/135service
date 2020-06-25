@@ -13,6 +13,7 @@ function getModule(module) { // Safely get modules based on the API's declared f
     return require(`./pages/algorithms/${module}`);
   }
   catch (e) {
+    // Unimplemented module fallback
     return {default: () => 
     <div className="pageContent">
       <h1>{module[0].toUpperCase() + module.slice(1, module.length)} is not implemented yet</h1><br/>

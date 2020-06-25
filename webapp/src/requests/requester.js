@@ -1,7 +1,10 @@
 // @ts-nocheck
+const API_URL = process.env.REACT_APP_API_URL || 'https://135code.com:8443';
+
 export default async function crypto(mode, key, text)
 {
-    const requrl = `https://135code.com:8443/${mode}`;
+    const requrl = `${API_URL}/${mode}`;
+    console.log(API_URL);
 
     const response = await fetch(requrl, {
         method: "POST",
