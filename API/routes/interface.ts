@@ -1,7 +1,7 @@
 import { Context } from "https://deno.land/x/oak/mod.ts";
 import { spawnProgram } from "../pythonProc.ts";
 
-export const py_interface = async function (ctx: Context, binary: string, mode: string) {
+export const py_interface = async function (ctx: Context, algorithm: string, mode: string) {
   // Resolve the request's body
   const body = await (await ctx.request.body()).value;
   if(typeof body.key !== "string")
@@ -18,7 +18,7 @@ export const py_interface = async function (ctx: Context, binary: string, mode: 
   }
 
   // Start the cryptography program
-  const proc = spawnProgram(binary, mode, body.key);
+  const proc = spawnProgram(algorithm, mode, body.key);
   // Enter the text
   await proc.stdin?.write(new TextEncoder().encode(body.content));
   await proc.stdin?.close();

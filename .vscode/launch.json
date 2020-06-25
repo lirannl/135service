@@ -34,7 +34,12 @@
         "type": "python",
         "request": "launch",
         "name": "Launch python script",
-        "program": "${file}"
+        "program": "${file}",
+        "args": [
+            "-e",
+            "123",
+            "cipher135"
+        ]
     }
     ]
 }
