@@ -17,7 +17,7 @@ function getModule(module) { // Safely get modules based on the API's declared f
     // Unimplemented module fallback
     return {default: () => 
     <div className="pageContent">
-      <h1>{capitalise(module)} is not implemented yet</h1><br/>
+      <h1>{capitalise(module)} is coming soon!</h1><br/>
       <Link to="/">Back to homepage</Link>
       </div>};
   }
@@ -44,7 +44,7 @@ export function Routes(props) {
     <Route exact path="/privacy"><Privacy /></Route>
     <Route exact path="/"><C135Cipher 
   classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} /></Route>
+  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} loadingp={loading} setLoadingp={setLoading} /></Route>
     {Object.entries(funcNames).map(fname => <Route key={fname[1]} path={`/${fname[0]}`}>{getModule(fname[0]) // For each path
     .default(classes, setResult, sendInput, key, text, setResLabel, setKey, setText, result, resLabel, loading, setLoading)}</Route>) /* Call the default function of the module */} 
     <Route path="/">{funcNames.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound/>}</Route>
