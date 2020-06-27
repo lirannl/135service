@@ -1,9 +1,15 @@
-import { Context } from "https://deno.land/x/oak/mod.ts";
+import { RouterContext } from "https://deno.land/x/oak/mod.ts";
 import { spawnProgram } from "../pythonProc.ts";
 
-export const py_interface = async function (ctx: Context, algorithm: string, mode: string) {
+export const py_interface = async function (ctx: RouterContext) {
   // Resolve the request's body
   const body = await (await ctx.request.body()).value;
+  if(!body.operation)
+  {
+    ctx.response.status = 400;
+    ctx.response.body = `No operation specified for algorithm "${ctx.params.algorithm}".`;
+    return;
+  }
   if(typeof body.key !== "string")
   {
     ctx.response.status = 400;
@@ -18,7 +24,7 @@ export const py_interface = async function (ctx: Context, algorithm: string, mod
   }
 
   // Start the cryptography program
-  const proc = spawnProgram(algorithm, mode, body.key);
+  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key);
   // Enter the text
   await proc.stdin?.write(new TextEncoder().encode(body.content));
   await proc.stdin?.close();
