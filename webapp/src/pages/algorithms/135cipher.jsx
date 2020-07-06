@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TextField from '@material-ui/core/TextField';
-import AdvancedOptionsCard from '../../components/advanced_options_card.jsx';
+import AdvancedOptions from '../../components/advanced_options.jsx';
 import { CircularProgress, Checkbox, FormControlLabel } from '@material-ui/core';
 import { BetaTag } from '../../components/beta.jsx';
 import { Switch, Route } from 'react-router-dom';
@@ -33,9 +33,6 @@ function FieldWithPasteButton(props) {
     rowsMax={8}
     value={props.text}
     onChange={(event) => {
-      // eslint-disable-next-line
-      //if (!RegExp("^[\x20-\x7F\x09\x0A]*$").test(event.target.value)) alert("You may only enter printable ascii characters here.");
-      //else 
       props.setText(event.target.value);
     }
     }/>
@@ -81,6 +78,10 @@ const loading = props.loadingp;
 const setLoading = props.setLoadingp;
 const [randomPattern, setRandomPattern] = useState(false);
 
+const send = (action) => setResult(sendInput(key, text, action, "135cipher", result, setResult, setLoading, setResLabel, [
+  randomPattern ? '+' : '-'
+]));
+
 return <div className="pageContent">
 
     <h1>135Code cryptography application</h1>
@@ -96,30 +97,22 @@ return <div className="pageContent">
         else alert("You can only input a whole number as the key.");
       }}/>
       <FieldWithPasteButton text={text} setText={setText}/>
-      <AdvancedOptionsCard>
+      </div>
+      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+        <Button onClick={event => send('encrypt')}>Encrypt</Button>
+        <Button onClick={event => send('decrypt')}>Decrypt</Button>
+      </ButtonGroup>
+    </form>
+    <BetaTag/>
+    <ReadOnlyTextField result={loading ? "Loading..." : result || ''} resLabel={resLabel}/>
+    <React.Fragment><br/><CircularProgress color="primary" className={loading ? "loading" : "loading-hidden"} /></React.Fragment>
+    <AdvancedOptions>
         <FormControlLabel
           control={
             <Checkbox value={randomPattern} onChange={event => {setRandomPattern(!randomPattern);}} />
           }
           label="Random Noise Pattern"
         />
-      </AdvancedOptionsCard>
-      </div>
-      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <Button onClick={event => {
-          setResult(sendInput(key, text, 'encrypt', "135cipher", result, setResult, setLoading, setResLabel, [
-            randomPattern ? '+' : '-'
-          ]));
-          }}>Encrypt</Button>
-        <Button onClick={event => {
-          setResult(sendInput(key, text, 'decrypt', "135cipher", result, setResult, setLoading, setResLabel, [
-            randomPattern ? '+' : '-'
-          ]));
-          }}>Decrypt</Button>
-      </ButtonGroup>
-    </form>
-    <BetaTag/>
-    <ReadOnlyTextField result={result} resLabel={resLabel}/>
-    {loading ? <React.Fragment><br/><CircularProgress color="primary" /></React.Fragment>: null}
+      </AdvancedOptions>
     </div>;
 }

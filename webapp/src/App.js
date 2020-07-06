@@ -20,9 +20,8 @@ function sendInput(key, text, mode, algorithm, result, setResult, setLoading, se
   }
   else{
     setLoading(true);
-    setResult("Loading...");
     setResLabel(`${capitalise(mode)}ed result`);
-    query(algorithm, mode, key, text, extras).then(res => {setLoading(false); setResult(res);}).catch(e => setResult("Failed"));
+    query(algorithm, mode, key, text, extras).then(res => {setLoading(false); setResult(res);}).catch(e => {setResult("Failed"); setLoading(false);});
   }
 }
 
