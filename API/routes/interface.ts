@@ -24,7 +24,7 @@ export const py_interface = async function (ctx: RouterContext) {
   }
 
   // Start the cryptography program
-  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key);
+  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key, <Array<string>>(body.extras || []));
   // Enter the text
   await proc.stdin?.write(new TextEncoder().encode(body.content));
   await proc.stdin?.close();
@@ -38,8 +38,6 @@ export const py_interface = async function (ctx: RouterContext) {
   // Get the program's output
   const rawOutput = await proc.output();
   const outputString = new TextDecoder().decode(rawOutput);
-  ctx.response.status = 200;
-  ctx.response.body = {message: outputString};
   if (code.success) {
     ctx.response.status = 200;
     ctx.response.body = {message: outputString};
