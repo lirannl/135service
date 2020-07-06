@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { NavigationBar } from './components/navbar.jsx';
 import { capitalise } from './utils';
 
-function sendInput(key, text, mode, algorithm, result, setResult, setLoading, setResLabel) {
+function sendInput(key, text, mode, algorithm, result, setResult, setLoading, setResLabel, extras) {
   if (key === '' || text === '')
   {
     alert(`Sorry, you must input a key and content to ${mode}.`);
@@ -22,7 +22,7 @@ function sendInput(key, text, mode, algorithm, result, setResult, setLoading, se
     setLoading(true);
     setResult("Loading...");
     setResLabel(`${capitalise(mode)}ed result`);
-    query(algorithm, mode, key, text).then(res => {setLoading(false); setResult(res);}).catch(e => setResult("Failed"));
+    query(algorithm, mode, key, text, extras).then(res => {setLoading(false); setResult(res);}).catch(e => setResult("Failed"));
   }
 }
 

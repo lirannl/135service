@@ -1,9 +1,11 @@
 // @ts-nocheck
 import React from 'react';
+import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import TextField from '@material-ui/core/TextField';
-import { CircularProgress } from '@material-ui/core';
+import AdvancedOptionsCard from '../../components/advanced_options_card.jsx';
+import { CircularProgress, Checkbox, FormControlLabel } from '@material-ui/core';
 import { BetaTag } from '../../components/beta.jsx';
 import { Switch, Route } from 'react-router-dom';
 
@@ -77,6 +79,7 @@ const result = props.resultp;
 const resLabel = props.resLabelp;
 const loading = props.loadingp;
 const setLoading = props.setLoadingp;
+const [randomPattern, setRandomPattern] = useState(false);
 
 return <div className="pageContent">
 
@@ -93,10 +96,26 @@ return <div className="pageContent">
         else alert("You can only input a whole number as the key.");
       }}/>
       <FieldWithPasteButton text={text} setText={setText}/>
+      <AdvancedOptionsCard>
+        <FormControlLabel
+          control={
+            <Checkbox value={randomPattern} onChange={event => {setRandomPattern(!randomPattern);}} />
+          }
+          label="Random Noise Pattern"
+        />
+      </AdvancedOptionsCard>
       </div>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <Button onClick={event => {setResult(sendInput(key, text, 'encrypt', "135cipher", result, setResult, setLoading, setResLabel));}}>Encrypt</Button>
-        <Button onClick={event => {setResult(sendInput(key, text, 'decrypt', "135cipher", result, setResult, setLoading, setResLabel));}}>Decrypt</Button>
+        <Button onClick={event => {
+          setResult(sendInput(key, text, 'encrypt', "135cipher", result, setResult, setLoading, setResLabel, [
+            randomPattern ? '+' : '-'
+          ]));
+          }}>Encrypt</Button>
+        <Button onClick={event => {
+          setResult(sendInput(key, text, 'decrypt', "135cipher", result, setResult, setLoading, setResLabel, [
+            randomPattern ? '+' : '-'
+          ]));
+          }}>Decrypt</Button>
       </ButtonGroup>
     </form>
     <BetaTag/>

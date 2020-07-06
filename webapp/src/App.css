@@ -68,3 +68,22 @@ a {
   color: #61dafb;
   font-size: small;
 }
+
+.Advanced_Options_Card {
+  background-color: #2d313b !important;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 75%;
+}
+
+.MuiCardHeader-root{
+  padding: 4pt !important;
+}
+
+.MuiCardContent-root{
+  padding: 4pt !important;
+}
+
+.MuiCardHeader-root .MuiTypography-displayBlock{
+  font-size: 1rem !important;
+}
