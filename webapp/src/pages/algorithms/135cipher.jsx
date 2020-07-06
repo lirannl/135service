@@ -105,7 +105,7 @@ return <div className="pageContent">
     </form>
     <BetaTag/>
     <ReadOnlyTextField result={loading ? "Loading..." : result || ''} resLabel={resLabel}/>
-    <React.Fragment><br/><CircularProgress color="primary" className={loading ? "loading" : "loading-hidden"} /></React.Fragment>
+    <React.Fragment><br/><CircularProgress color="primary" className={loading ? null : "hidden"} /></React.Fragment>
     <AdvancedOptions>
         <FormControlLabel
           control={

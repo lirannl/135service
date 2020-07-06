@@ -17,7 +17,7 @@ export default function AdvancedOptionsCard(props) {
           aria-expanded={expanded}
           aria-label="show options"
         >
-          Advanced options
+          <span className="ExpandLabel">Advanced Options</span>
           <ExpandMoreIcon />
         </IconButton>
         <Collapse in={expanded} timeout="auto">
