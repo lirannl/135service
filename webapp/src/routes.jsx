@@ -6,57 +6,33 @@ import { GlobalAbout } from './pages/about.jsx';
 import { Disclaimer } from './pages/disclaimer.jsx';
 import { Privacy } from './pages/privacy.jsx';
 import { NotFound } from './pages/notfound.jsx';
-import { Link } from 'react-router-dom';
-import { capitalise } from './utils';
+import Unimplemented from './pages/unimplemented.jsx';
 
-function getModule(module) { // Safely get modules based on the API's declared functions
+function getModule(mod) { // Safely get modules based on the API's declared functions
   try {
-    return require(`./pages/algorithms/${module}`);
+    return require(`./pages/algorithms/${mod}`);
   }
   catch (e) {
     // Unimplemented module fallback
-    return {default: () => 
-    <div className="pageContent">
-      <h1>{capitalise(module)} is coming soon!</h1><br/>
-      <Link to="/">Back to homepage</Link>
-      </div>};
+    return {default: (props) => <Unimplemented module={mod}/>, About: (props) => <Unimplemented module={mod}/>};
   }
 }
 
 function ModuleRoute(props){
-  const {module, ...otherProps} = props;
-  return <Route path={`/${module.fname[0]}`}>
-    <Switch>
-      <Route path="*/about">{module.funcs.About(otherProps)}</Route>
-      <Route path='/'>{module.funcs.default(otherProps)}</Route>
+  const {mod, ...otherProps} = props;
+  return <Switch>
+      <Route path="*/about">{mod.About(otherProps)}</Route>
+      <Route path='/'>{mod.default(otherProps)}</Route>
     </Switch>
-  </Route>
 }
 
 export function Routes(props) {
-    const classes = props.classesp;
-    const setResult = props.setResultp;
-    const sendInput = props.sendInputp;
-    const key = props.keyp;
-    const text = props.textp;
-    const setResLabel = props.setResLabelp;
-    const setKey = props.setKeyp;
-    const setText = props.setTextp;
-    const result = props.resultp;
-    const resLabel = props.resLabelp;
-    const funcNames = props.funcsp;
-    const loading = props.loadingp;
-    const setLoading = props.setLoadingp;
-    const modules = Object.entries(funcNames).map(fname => ({fname: fname, funcs: getModule(fname[0])}) );
-
-    return <Switch>
-    <Route exact path="/about"><GlobalAbout /></Route>
-    <Route exact path="/disclaimer"><Disclaimer /></Route>
-    <Route exact path="/privacy"><Privacy /></Route>
-    <Route exact path="/"><C135Cipher 
-  classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} loadingp={loading} setLoadingp={setLoading} /></Route>
-    {funcNames.unloaded ? null : modules.map(mod => <ModuleRoute module={mod} key={mod.fname[1]} {...props}/>)}
-    <Route path="/">{funcNames.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound/>}</Route>
+  return <Switch>
+  <Route exact path="/about"><GlobalAbout /></Route>
+  <Route exact path="/disclaimer"><Disclaimer /></Route>
+  <Route exact path="/privacy"><Privacy /></Route>
+  <Route exact path="/"><C135Cipher {...props} /></Route>
+  {Object.entries(props.state.funcs.value).map(fname => <Route key={fname[1]} path={`/${fname[0]}`}><ModuleRoute mod={getModule(fname[0])} {...props}/></Route>)}
+  <Route path="/">{props.state.funcs.value.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound/>}</Route>
 </Switch>
 }

@@ -63,21 +63,10 @@ export function About(props){
 }
 
 export default function(props){
-const classes = props.classesp;
-const setResult = props.setResultp;
-const sendInput = props.sendInputp;
-const key = props.keyp;
-const text = props.textp;
-const setResLabel = props.setResLabelp;
-const setKey = props.setKeyp;
-const setText = props.setTextp;
-const result = props.resultp;
-const resLabel = props.resLabelp;
-const loading = props.loadingp;
-const setLoading = props.setLoadingp;
+const {factor, content, result, loading, resLabel, classes, sendInput} = props.state;
 const [randomPattern, setRandomPattern] = useState(false);
 
-const send = (action) => setResult(sendInput(key, text, action, "135cipher", result, setResult, setLoading, setResLabel, [
+const send = (action) => result.set(sendInput(factor.value, content.value, action, "135cipher", result, loading.set, resLabel.set, [
   randomPattern ? '+' : '-'
 ]));
 
@@ -85,17 +74,17 @@ return <div className="pageContent">
 
     <h1>135Code cryptography application</h1>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
-      setResult(sendInput(key, text, 'encrypt', result, setResult, setLoading, setResLabel)); 
+      send('encrypt'); 
       event.preventDefault();
       }}>
       <div>
-      <TextField id="keyField" label="key" inputMode="numeric" value={key} onChange={(event) => {
+      <TextField id="keyField" label="key" inputMode="numeric" value={factor.value} onChange={(event) => {
         if (event.target.value.length>135) alert("Key must be up to 135 characters long.");
         else if (RegExp("^\\d*$").test(event.target.value))
-        setKey(event.target.value);
+        factor.set(event.target.value);
         else alert("You can only input a whole number as the key.");
       }}/>
-      <FieldWithPasteButton text={text} setText={setText}/>
+      <FieldWithPasteButton text={content.value} setText={content.set}/>
       </div>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
         <Button onClick={event => send('encrypt')}>Encrypt</Button>
@@ -103,8 +92,8 @@ return <div className="pageContent">
       </ButtonGroup>
     </form>
     <BetaTag/>
-    <ReadOnlyTextField result={loading ? "Loading..." : result || ''} resLabel={resLabel}/>
-    <React.Fragment><br/><CircularProgress color="primary" className={loading ? null : "hidden"} /></React.Fragment>
+    <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value}/>
+    <React.Fragment><br/><CircularProgress color="primary" className={loading.value ? null : "hidden"} /></React.Fragment>
     <AdvancedOptions>
         <FormControlLabel
           control={
