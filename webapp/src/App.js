@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from './routes.jsx';
 import { useEffect } from 'react';
-import { NavigationBar } from './components/navbar.jsx';
+import NavigationBar from './components/navbar.jsx';
 import { capitalise } from './utils';
 
 function sendInput(key, text, mode, algorithm, result, setResult, setLoading, setResLabel, extras) {

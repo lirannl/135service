@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import AdvancedOptions from '../../components/advanced_options.jsx';
 import { CircularProgress, Checkbox, FormControlLabel } from '@material-ui/core';
 import { BetaTag } from '../../components/beta.jsx';
-import { Switch, Route } from 'react-router-dom';
 
 function ReadOnlyTextField(props) {
   const OutputField = React.useRef(null);
@@ -54,16 +53,16 @@ async function safeSelect(event){
   }
 }
 
-// Every algorithm's frontend module must have a default export for handling its' path
-export default function(classes, setResult, sendInput, key, text, setResLabel, setKey, setText, result, resLabel, loading, setLoading) {
-  return <Switch>
-    <Route path="*/about"><div className="">About the 135cipher algorithm</div></Route>
-    <Route path="/"><C135Cipher classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
-  setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} loadingp={loading} setLoadingp={setLoading}/></Route>
-  </Switch>
+// Every module needs an About(props) function that returns a per-module about page
+export function About(props){
+  return (
+    <div className="pageContent">
+      About the 135cipher algorithm
+    </div>
+  );
 }
 
-export function C135Cipher(props){
+export default function(props){
 const classes = props.classesp;
 const setResult = props.setResultp;
 const sendInput = props.sendInputp;

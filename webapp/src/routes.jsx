@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { C135Cipher } from './pages/algorithms/135cipher.jsx';
+import C135Cipher from './pages/algorithms/135cipher.jsx';
 import { GlobalAbout } from './pages/about.jsx';
 import { Disclaimer } from './pages/disclaimer.jsx';
 import { Privacy } from './pages/privacy.jsx';
@@ -23,6 +23,16 @@ function getModule(module) { // Safely get modules based on the API's declared f
   }
 }
 
+function ModuleRoute(props){
+  const {module, ...otherProps} = props;
+  return <Route path={`/${module.fname[0]}`}>
+    <Switch>
+      <Route path="*/about">{module.funcs.About(otherProps)}</Route>
+      <Route path='/'>{module.funcs.default(otherProps)}</Route>
+    </Switch>
+  </Route>
+}
+
 export function Routes(props) {
     const classes = props.classesp;
     const setResult = props.setResultp;
@@ -37,6 +47,7 @@ export function Routes(props) {
     const funcNames = props.funcsp;
     const loading = props.loadingp;
     const setLoading = props.setLoadingp;
+    const modules = Object.entries(funcNames).map(fname => ({fname: fname, funcs: getModule(fname[0])}) );
 
     return <Switch>
     <Route exact path="/about"><GlobalAbout /></Route>
@@ -45,8 +56,7 @@ export function Routes(props) {
     <Route exact path="/"><C135Cipher 
   classesp={classes} setResultp={setResult} sendInputp={sendInput} keyp={key} textp={text} setResLabelp={setResLabel}
   setKeyp={setKey} setTextp={setText} resultp={result} resLabelp={resLabel} loadingp={loading} setLoadingp={setLoading} /></Route>
-    {Object.entries(funcNames).map(fname => <Route key={fname[1]} path={`/${fname[0]}`}>{getModule(fname[0]) // For each path
-    .default(classes, setResult, sendInput, key, text, setResLabel, setKey, setText, result, resLabel, loading, setLoading)}</Route>) /* Call the default function of the module */} 
+    {funcNames.unloaded ? null : modules.map(mod => <ModuleRoute module={mod} key={mod.fname[1]} {...props}/>)}
     <Route path="/">{funcNames.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound/>}</Route>
 </Switch>
 }
