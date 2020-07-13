@@ -4,8 +4,8 @@ import { router } from "./routes.ts";
 const env = Deno.env.toObject();
 const CERTPATH = env.CERTPATH;
 const KEYPATH = env.KEYPATH;
-const HOST = env.HOST || '0.0.0.0'
-const PORT = parseInt(env.API_PORT) || 7700
+const HOST = env.HOST || '0.0.0.0';
+const PORT = parseInt(env.API_PORT) || 7700;
 
 const app = new Application();
 
