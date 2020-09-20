@@ -61,7 +61,7 @@ export function About(props) {
   return (
     <div className="pageContent about">
       <h1 style={{ marginBottom: '5pt' }}>135Cipher Information</h1>
-      <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher`)} style={{ marginBottom: "20pt" }}>135Cipher</Button><br />
+      <Button variant="outlined" color="secondary" onClick={() => history.push(`/135cipher`)} style={{ marginBottom: "20pt" }}>135Cipher</Button><br />
       Initial Creation Date: 25/05/2020<br />
       Designed by: Jamal135<br />
       <h2>Overview:</h2>
@@ -328,7 +328,7 @@ export default function (props) {
 
     <h1 style={{ marginBottom: '-15pt' }}>135Cipher</h1>
     <p className="smallText">Symmetric Encryption Algorithm</p>
-    <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher/about`)} style={{ marginBottom: "20pt" }}>About</Button>
+    <Button variant="outlined" color="secondary" onClick={() => history.push(`/135cipher/about`)} style={{ marginBottom: "20pt" }}>About</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
       send('encrypt');
       event.preventDefault();
