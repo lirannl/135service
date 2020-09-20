@@ -57,9 +57,11 @@ async function safeSelect(event) {
 
 // Every module needs an About(props) function that returns a per-module about page
 export function About(props) {
+  const history = useHistory();
   return (
     <div className="pageContent about">
-      <h1>135Cipher Information</h1>
+      <h1 style={{marginBottom: '5pt'}}>135Cipher Information</h1>
+      <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher`)} style={{ marginBottom: "20pt" }}>135Cipher</Button><br />
       Initial Creation Date: 25/05/2020<br />
       Designed by: Jamal135<br />
       <h2>Overview:</h2>
@@ -160,7 +162,7 @@ Additionally, the value is rounded to a whole number.
         which involves code that refers to this function.
       </p>
       <b>Figure 9:<br />Python Shifting Formula</b>
-  <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>{`\
+      <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>{`\
   #Define calculation function for use in factoring function.
   def calculation(factor, alpha_sequence_length, val):
  
@@ -173,12 +175,12 @@ Additionally, the value is rounded to a whole number.
     
     return calculation`}</SyntaxHighlighter></div>
       <p>
-      The complete implementation of the number calculation within the algorithm can be broken down into two parts.
-      Part one is illustrated in Figure 10, and shows the calculation of one very large number leveraging the pre-established shifting formula three times. 
-Note: Primary Factor refers to the Factor (Key), and Secondary Factor refers to the Factor divided by four (Key/4).
+        The complete implementation of the number calculation within the algorithm can be broken down into two parts.
+        Part one is illustrated in Figure 10, and shows the calculation of one very large number leveraging the pre-established shifting formula three times.
+        Note: Primary Factor refers to the Factor (Key), and Secondary Factor refers to the Factor divided by four (Key/4).
       </p>
-      <b>Figure 10:<br/>Python Factoring Part One</b>
-  <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>{`\
+      <b>Figure 10:<br />Python Factoring Part One</b>
+      <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>{`\
     #Calculation
     for count in range(number_characters):
         #Complete calculations
@@ -202,14 +204,14 @@ Note: Primary Factor refers to the Factor (Key), and Secondary Factor refers to 
                              alpha_sequence_length, 
                              combined_calculation))`}</SyntaxHighlighter></div>
       <p>
-      The large number calculated from part one is then taken and broken into two parts which are calculated together
-      to produce a new number (magic_c), shown in Figure 11.
-      A small part of this large number is cut off to be used as the final calculated shifting value.
-      Then the final shifting value of the previous number (or 135 initially), is added to this number.
-      Finally, the remainder of the number divided into the alpha sequence length (modulo operation) is found,
-      to know the amount along the sequence the character should be shifted.
+        The large number calculated from part one is then taken and broken into two parts which are calculated together
+        to produce a new number (magic_c), shown in Figure 11.
+        A small part of this large number is cut off to be used as the final calculated shifting value.
+        Then the final shifting value of the previous number (or 135 initially), is added to this number.
+        Finally, the remainder of the number divided into the alpha sequence length (modulo operation) is found,
+        to know the amount along the sequence the character should be shifted.
       </p>
-      <b>Figure 11:<br/>Python Factoring Part Two</b>
+      <b>Figure 11:<br />Python Factoring Part Two</b>
       <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>
         {`\
         #Take parts of output calculation.
@@ -228,16 +230,16 @@ Note: Primary Factor refers to the Factor (Key), and Secondary Factor refers to 
         if count % 2 == 0:
             final_output = final_output + 1`}</SyntaxHighlighter></div>
       <p>
-      This entire calculation process illustrated in Figures 10 and 11 is completed
-      for every character in the input text (after the transposition stage).
-      With each character, a new Val value is entered to ensure a new shifting value is
-      generated despite the Key and Length values remaining unchanged.<br/>
+        This entire calculation process illustrated in Figures 10 and 11 is completed
+        for every character in the input text (after the transposition stage).
+        With each character, a new Val value is entered to ensure a new shifting value is
+      generated despite the Key and Length values remaining unchanged.<br />
       In addition to the shifting value that is calculated for every character in the input,
       a unique sequence is generated for each character to shift along by the calculated value.
       To achieve this, the Python Random standard library is leveraged to seed a random
       re-arrangement of the pre-defined character_list, as shown in Figure 12.
       </p>
-      <b>Figure 12:<br/>Python Sequence Generator</b>
+      <b>Figure 12:<br />Python Sequence Generator</b>
       <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>
         {`\
 #Use input to generate alphabetical sequence.
@@ -261,48 +263,48 @@ def generate_alpha_sequence(input):
  
     return alphabetical_sequence`}</SyntaxHighlighter></div>
       <p>
-      In order for this sequence generator to work, a unique input argument must be
-      provided for every sequence that needs to be generated (in this case one per character in the provided input text).
-      To achieve this, the formula shown in Figure 13 is used.
-      In this formula Key is theencryption/decryption key and count refers to the current character out of the total characters (“2” out of 25 for example).
+        In order for this sequence generator to work, a unique input argument must be
+        provided for every sequence that needs to be generated (in this case one per character in the provided input text).
+        To achieve this, the formula shown in Figure 13 is used.
+        In this formula Key is theencryption/decryption key and count refers to the current character out of the total characters (“2” out of 25 for example).
       </p>
-      <b>Figure 13:<br/>Sequence Input Formula</b>
+      <b>Figure 13:<br />Sequence Input Formula</b>
       <div className="box"><img alt="Sequence Input Formula" src="/135cipherInfo/figure_13.png" /></div>
       <p>
-      With the shifting values and shifting sequences calculated for every character,
-      the first shift will occur. The process is simple,
-      the position of the selected character will be indexed in the calculated sequence for that character (number corresponding to position).
-      Then the calculated shift value for the selected character will be added to the indexed position number
-      as well as the new indexed position number of the previous character. This formula is shown in Figure 14.
+        With the shifting values and shifting sequences calculated for every character,
+        the first shift will occur. The process is simple,
+        the position of the selected character will be indexed in the calculated sequence for that character (number corresponding to position).
+        Then the calculated shift value for the selected character will be added to the indexed position number
+        as well as the new indexed position number of the previous character. This formula is shown in Figure 14.
       </p>
-      <b>Figure 14:<br/>New Position Formula:</b>
+      <b>Figure 14:<br />New Position Formula:</b>
       <div className="box"><img alt="Sequence Input Formula" src="/135cipherInfo/figure_14.png" /></div>
       <p>
-      Involving the index value of the previous new position in the calculation of the next new position ensures that
-      any change in input (when using the same key), results in every character after that change being encrypted with new values.
-      This means any change to the input always results in a newly calculated final character.
-      Leveraging this fact, the position of the final character will be indexed for a secondary shift value
-      in a sequence generated with the formula of Figure 13 where Count is equal to zero (base sequence).
-      Then, every other character (except the final character),
-      will be shifted along their respective calculated sequences by this secondary shift value.
-      This completes the butterfly effect by ensuring any change in any part of the input results in a completely different
-      encrypted output despite the Key value being the same. A summary of this two step shifting process can be found in Figure 15, below.
+        Involving the index value of the previous new position in the calculation of the next new position ensures that
+        any change in input (when using the same key), results in every character after that change being encrypted with new values.
+        This means any change to the input always results in a newly calculated final character.
+        Leveraging this fact, the position of the final character will be indexed for a secondary shift value
+        in a sequence generated with the formula of Figure 13 where Count is equal to zero (base sequence).
+        Then, every other character (except the final character),
+        will be shifted along their respective calculated sequences by this secondary shift value.
+        This completes the butterfly effect by ensuring any change in any part of the input results in a completely different
+        encrypted output despite the Key value being the same. A summary of this two step shifting process can be found in Figure 15, below.
       </p>
-      <b>Figure 15:<br/>Shifting Process</b>
+      <b>Figure 15:<br />Shifting Process</b>
       <div className="box"><img alt="Sequence Input Formula" src="/135cipherInfo/figure_15.png" /></div>
       <h2>Summary</h2>
       <p>
-      In summary, this is a symmetric and deterministic encryption algorithm with a built in butterfly effect
-      such that any change of key or input completely changes the output.
-      Given the deterministic nature of this algorithm, the transposition step can be made random to allow variation of output for the same key and input.
-      The algorithm works by Base64 encoding an input, shuffling it through a half split two row transposition,
-      then every character is shifted by an individually calculated shift list on an individually generated character sequence.
-      Finally, all characters are shifted (except the last character) again on the same
-      respective sequences by a set value given the index of the final character.
-      Even if my approach to the functions in this algorithm may be ineffective, there may still be value
-      in this kind of approach as generalised in Figure 16, below.
+        In summary, this is a symmetric and deterministic encryption algorithm with a built in butterfly effect
+        such that any change of key or input completely changes the output.
+        Given the deterministic nature of this algorithm, the transposition step can be made random to allow variation of output for the same key and input.
+        The algorithm works by Base64 encoding an input, shuffling it through a half split two row transposition,
+        then every character is shifted by an individually calculated shift list on an individually generated character sequence.
+        Finally, all characters are shifted (except the last character) again on their same
+        respective sequences by a set value given by the index of the final character.
+        Even if my approach to the functions in this algorithm may be ineffective, there may still be value
+        in this kind of approach as generalised in Figure 16, below.
       </p>
-      <b>Figure 16:<br/>Generalised Process</b>
+      <b>Figure 16:<br />Generalised Process</b>
       <div className="box"><img alt="Sequence Input Formula" src="/135cipherInfo/figure_16.png" /></div>
       <p>
         As a first dive into Python coding and encryption, this was a very enjoyable project to work on.
@@ -324,8 +326,9 @@ export default function (props) {
 
   return <div className="pageContent">
 
-    <h1>135Cipher</h1>
-    <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher/about`)} style={{marginBottom: "20pt"}}>About</Button>
+    <h1 style={{ marginBottom: '-15pt' }}>135Cipher</h1>
+    <p className="smallText">Symmetric Encryption Algorithm</p>
+    <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher/about`)} style={{ marginBottom: "20pt" }}>About</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
       send('encrypt');
       event.preventDefault();

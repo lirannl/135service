@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { GlobalAbout } from './pages/about.jsx';
 import { Disclaimer } from './pages/disclaimer.jsx';
 import { Privacy } from './pages/privacy.jsx';
@@ -20,8 +20,8 @@ function getModule(mod) { // Safely get modules based on the API's declared func
 function ModuleRoute(props) {
   const { mod, modName, ...otherProps } = props;
   return <Switch>
-    <Route path="*/about">{mod.About(otherProps)}</Route>
-    <Route path='/'>{mod.default(otherProps)}</Route>
+    <Route path="*/about">{[mod.About(otherProps), <Link to={`/${modName}`}>Back to {modName}</Link>]}</Route>
+    <Route path='/'>{[mod.default(otherProps), <Link to={`/${modName}/about`}>About {modName}</Link>]}</Route>
   </Switch>
 }
 
