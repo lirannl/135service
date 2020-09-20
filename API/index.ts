@@ -9,9 +9,9 @@ const PORT = parseInt(env.API_PORT) || 7700;
 
 const app = new Application();
 
-app.use(oakCors());
-app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(oakCors())
+    .use(router.routes())
+    .use(router.allowedMethods());
 
 console.log(`Listening on ${HOST}:${PORT}`);
 if (CERTPATH || KEYPATH) await app.listen({

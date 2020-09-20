@@ -12,10 +12,11 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-syntax-highlighter": "^13.5.3",
     "websocket-extensions": "^0.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "eval $(egrep -v '^#' ../.env | xargs) react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

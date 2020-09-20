@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import C135Cipher from './pages/algorithms/135cipher.jsx';
 import { GlobalAbout } from './pages/about.jsx';
 import { Disclaimer } from './pages/disclaimer.jsx';
 import { Privacy } from './pages/privacy.jsx';
@@ -28,10 +27,9 @@ function ModuleRoute(props){
 
 export function Routes(props) {
   return <Switch>
-  <Route exact path="/about"><GlobalAbout /></Route>
   <Route exact path="/disclaimer"><Disclaimer /></Route>
   <Route exact path="/privacy"><Privacy /></Route>
-  <Route exact path="/"><C135Cipher {...props} /></Route>
+  <Route exact path="/"><GlobalAbout {...props}/></Route>
   {Object.entries(props.state.funcs.value).map(fname => <Route key={fname[1]} path={`/${fname[0]}`}><ModuleRoute mod={getModule(fname[0])} {...props}/></Route>)}
   <Route path="/">{props.state.funcs.value.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound/>}</Route>
 </Switch>

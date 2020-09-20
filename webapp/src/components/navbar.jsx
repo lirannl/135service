@@ -50,7 +50,8 @@ function TabPanel(props) {
     const classes = useStyles();
     const history = useHistory();
     const [value, setValue] = React.useState(0);
-    const children = props.children.slice(0, -1).concat(props.children.slice(-1)[0])
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const children = props.children.slice(0, -1).concat(props.children.slice(-1)[0]);
   
     function getKey(children, value){
       try {
@@ -82,7 +83,7 @@ function TabPanel(props) {
             textColor="primary"
             aria-label="scrollable force tabs example"
           >
-            {props.children}
+            {children}
           </Tabs>
         </AppBar>
       </div>
@@ -91,7 +92,6 @@ function TabPanel(props) {
 export default function(props) {
     return <NavBar {...props}>
         <Tab key="" label="Home" {...a11yProps(0)} />
-        <Tab key="about" label="About" {...a11yProps(0)} />
         {Object.entries(props.funcNames)
       .filter(entry => typeof entry[1] === 'string') // Only attempt to load properties with string values
       .map(entry => <Tab key={entry[1]} label={entry[0]} {...a11yProps(Object.entries(props.funcNames).indexOf(entry)+1)}/>)}

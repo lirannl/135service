@@ -1,0 +1,14 @@
+{
+  "$schema": "https://deno.land/x/denon@2.4.0/schema.json",
+  "scripts": {
+    "start": {
+      "env": {
+        "CODE_BIN":"/home/liran/OneDrive/ExtraCurricular/135code/bin/135code",
+        "BIN_DIR":"/home/liran/OneDrive/ExtraCurricular/135code/bin/functions",
+        "REACT_APP_API_URL":"http://127.0.0.1:7700"
+      },
+      "cmd": "deno run --allow-env --allow-net API/index.ts & npm start --prefix ./webapp",
+      "desc": "run my index.ts file"
+    }
+  }
+}
