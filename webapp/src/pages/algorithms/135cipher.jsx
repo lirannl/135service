@@ -308,7 +308,7 @@ def generate_alpha_sequence(input):
         As a first dive into Python coding and encryption, this was a very enjoyable project to work on.
         Though it should again be noted, the security of this algorithm is untested and has been created by a novice who is new to the field.
       </p>
-      <h3>Publication Date:			20/09/2020</h3>
+      <p className="uncentred">Publication Date:			20/09/2020</p>
     </div>
   );
 }

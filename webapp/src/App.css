@@ -106,3 +106,7 @@ a {
   text-align: start;
   background: unset !important;
 }
+
+p.uncentred {
+  text-align: start;
+}
