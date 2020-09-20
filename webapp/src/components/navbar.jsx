@@ -71,7 +71,7 @@ function TabPanel(props) {
       if (index >= 0) setValue(index);
     }, [history, children]);
   
-    return <div className={classes.root}>
+    return <div className={classes.root} style={{position: "fixed", top: "0"}}>
         <AppBar position="static" color="default">
           <Tabs
             value={value}
