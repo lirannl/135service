@@ -75,13 +75,7 @@ export function About(props) {
       <h2>Base64 Encoding:</h2>
       <p>This cipher utilises utf-8 Base64 encoding to support virtually all inputs. An example of base64 encoding can be seen below in Figure 2.</p>
       <b>Figure 2:<br />Example Base64 Encoding:</b>
-      <div className="box"><SyntaxHighlighter language="plaintext" style={elemStyle}>
-        {`\
-      I am happy text!
-      Base64 encoded as:
-      “SSBhbSBoYXBweSB0ZXh0IQ`}
-      </SyntaxHighlighter>
-      </div>
+      <div className="box"><img alt="General Transposition" src="/135cipherInfo/figure_2.png" /></div>
       <p>Note: Base64 in this case is intended to allow support for non ASCII characters,
       which is not demonstrated in this example.
         The Python code implementation for this can be seen in Figure 3, below.</p>

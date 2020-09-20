@@ -50,7 +50,6 @@ function TabPanel(props) {
     const classes = useStyles();
     const history = useHistory();
     const [value, setValue] = React.useState(0);
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const children = props.children.slice(0, -1).concat(props.children.slice(-1)[0]);
   
     function getKey(children, value){
