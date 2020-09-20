@@ -325,7 +325,7 @@ export default function (props) {
   return <div className="pageContent">
 
     <h1>135Cipher</h1>
-    <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher/about`)}>About 135cipher</Button>
+    <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher/about`)} style={{marginBottom: "20pt"}}>About</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
       send('encrypt');
       event.preventDefault();
