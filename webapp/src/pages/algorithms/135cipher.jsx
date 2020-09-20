@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import AdvancedOptions from '../../components/advanced_options.jsx';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import elemStyle from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015';
+import { useHistory } from 'react-router-dom';
 import { CircularProgress, Checkbox, FormControlLabel } from '@material-ui/core';
 import { BetaTag } from '../../components/beta.jsx';
 
@@ -315,6 +316,7 @@ def generate_alpha_sequence(input):
 export default function (props) {
   const { factor, content, result, loading, resLabel, classes, sendInput } = props.state;
   const [randomPattern, setRandomPattern] = useState(false);
+  const history = useHistory();
 
   const send = (action) => result.set(sendInput(factor.value, content.value, action, "135cipher", result, loading.set, resLabel.set, [
     randomPattern ? '+' : '-'
@@ -322,7 +324,8 @@ export default function (props) {
 
   return <div className="pageContent">
 
-    <h1>135Code cryptography application</h1>
+    <h1>135Cipher</h1>
+    <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher/about`)}>About 135cipher</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
       send('encrypt');
       event.preventDefault();

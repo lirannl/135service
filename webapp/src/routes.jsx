@@ -1,9 +1,7 @@
 //@ts-nocheck
 import React from 'react';
-import { Button } from '@material-ui/core';
 import { Route, Switch } from 'react-router-dom';
 import { GlobalAbout } from './pages/about.jsx';
-import { useHistory } from 'react-router-dom';
 import { Disclaimer } from './pages/disclaimer.jsx';
 import { Privacy } from './pages/privacy.jsx';
 import { NotFound } from './pages/notfound.jsx';
@@ -21,14 +19,9 @@ function getModule(mod) { // Safely get modules based on the API's declared func
 
 function ModuleRoute(props) {
   const { mod, modName, ...otherProps } = props;
-  const history = useHistory();
-  const aboutButton = () => {
-    if (mod.About) return <Button onClick={() => history.push(`${modName}/about`)}>About 135cipher</Button>;
-    else return null;
-  }
   return <Switch>
     <Route path="*/about">{mod.About(otherProps)}</Route>
-    <Route path='/'>{[mod.default(otherProps), aboutButton()]}</Route>
+    <Route path='/'>{mod.default(otherProps)}</Route>
   </Switch>
 }
 
