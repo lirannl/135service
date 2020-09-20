@@ -61,6 +61,13 @@
   font-size: small;
 }
 
+.completeTag {
+  color: rgb(47, 122, 22);
+  text-align: start;
+  font-style: italic;
+  font-size: small;
+}
+
 #OutputField {
   width: 80vw;
 }

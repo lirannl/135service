@@ -9,7 +9,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import elemStyle from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015';
 import { useHistory } from 'react-router-dom';
 import { CircularProgress, Checkbox, FormControlLabel } from '@material-ui/core';
-import { BetaTag } from '../../components/beta.jsx';
+import { Complete } from '../../components/complete.jsx';
 
 function ReadOnlyTextField(props) {
   const OutputField = React.useRef(null);
@@ -60,7 +60,7 @@ export function About(props) {
   const history = useHistory();
   return (
     <div className="pageContent about">
-      <h1 style={{marginBottom: '5pt'}}>135Cipher Information</h1>
+      <h1 style={{ marginBottom: '5pt' }}>135Cipher Information</h1>
       <Button variant="outlined" color="secondary" onClick={() => history.push(`135cipher`)} style={{ marginBottom: "20pt" }}>135Cipher</Button><br />
       Initial Creation Date: 25/05/2020<br />
       Designed by: Jamal135<br />
@@ -347,7 +347,7 @@ export default function (props) {
         <Button onClick={event => send('decrypt')}>Decrypt</Button>
       </ButtonGroup>
     </form>
-    <BetaTag />
+    <Complete />
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
     <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? null : "hidden"} /></React.Fragment>
     <AdvancedOptions>
