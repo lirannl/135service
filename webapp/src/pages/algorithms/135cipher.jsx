@@ -266,7 +266,7 @@ def generate_alpha_sequence(input):
         In order for this sequence generator to work, a unique input argument must be
         provided for every sequence that needs to be generated (in this case one per character in the provided input text).
         To achieve this, the formula shown in Figure 13 is used.
-        In this formula Key is theencryption/decryption key and count refers to the current character out of the total characters (“2” out of 25 for example).
+        In this formula Key is the encryption/decryption key and count refers to the current character out of the total characters (“2” out of 25 for example).
       </p>
       <b>Figure 13:<br />Sequence Input Formula</b>
       <div className="box"><img alt="Sequence Input Formula" src="/135cipherInfo/figure_13.png" /></div>
@@ -310,7 +310,8 @@ def generate_alpha_sequence(input):
         As a first dive into Python coding and encryption, this was a very enjoyable project to work on.
         Though it should again be noted, the security of this algorithm is untested and has been created by a novice who is new to the field.
       </p>
-      <p className="uncentred">Publication Date:			20/09/2020</p>
+      <p className="uncentred">Publication Date:	   		20/09/2020</p>
+      <p className="uncentred">Date Last Modified:			20/09/2020</p>
     </div>
   );
 }
