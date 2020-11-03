@@ -1,5 +1,4 @@
-// @ts-nocheck
-const API_URL = process.env.REACT_APP_API_URL || 'https://135code.com:8443';
+const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 export default async function (algorithm, mode, key, content, extras)
 {

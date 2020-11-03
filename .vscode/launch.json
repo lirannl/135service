@@ -1,12 +1,29 @@
 {
     "configurations": [
-    {
-        "name": "Attach to Chrome",
-        "port": 9222,
-        "request": "attach",
-        "type": "pwa-chrome",
-        "webRoot": "${workspaceFolder}"
-    },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Deno",
+            "program": "${workspaceFolder}/API/index.ts",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "/home/liran/.deno/bin/denon",
+            "outputCapture": "std",
+            "restart": true,
+            "runtimeArgs": [
+                "run",
+                "--inspect-brk=127.0.0.1:9229",
+                "--allow-all"
+            ],
+            "attachSimplePort": 9229
+        },
+        {
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "request": "attach",
+            "type": "pwa-chrome",
+            "urlFilter": "localhost*",
+            "webRoot": "${workspaceFolder}"
+        },
         {
             "type": "node",
             "request": "attach",
@@ -16,29 +33,15 @@
                 "<node_internals>/**"
             ]
         },
-        
-    {
-        "type": "node",
-        "request": "launch",
-        "name": "Launch API",
-        "restart": true,
-        "runtimeExecutable": "denon",
-        "runtimeArgs": ["run", "--inspect-brk", "--allow-read", "--allow-env", "--allow-run", "--allow-net", "${workspaceFolder}/API/index.ts"],
-        "envFile": "${workspaceFolder}/.env",
-        "outputCapture": "std",
-        "port": 9229,
-        "skipFiles": [
-            "<node_internals>/**"
-        ]
-    },
-    {
-        "type": "python",
-        "request": "launch",
-        "name": "Launch python script",
-        "program": "${file}",
-        "args": [
-            "-h"
-        ]
-    }
+
+        {
+            "type": "python",
+            "request": "launch",
+            "name": "Launch python script",
+            "program": "${file}",
+            "args": [
+                "-h"
+            ]
+        }
     ]
 }
