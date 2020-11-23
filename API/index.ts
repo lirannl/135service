@@ -29,5 +29,5 @@ if (CERTPATH || KEYPATH) await app.listen({
     certFile: CERTPATH,
     keyFile: KEYPATH
 });
-// If no certificates are specified, don't use https, and assume that the API runnning in development, meaning only localhost should have access
-else await app.listen(`localhost:${PORT}`);
+// If no certificates are specified, don't use https
+else await app.listen(`${HOST}:${PORT}`);
