@@ -30,4 +30,4 @@ if (CERTPATH || KEYPATH) await app.listen({
     keyFile: KEYPATH
 });
 // If no certificates are specified, don't use https
-else await app.listen(`${HOST}:${PORT}`);
+else await app.listen(`localhost:${PORT}`);
