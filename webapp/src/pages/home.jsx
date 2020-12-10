@@ -14,7 +14,7 @@ const algorithms = [
 ]
 
 export const Home = (props) =>
-    <div className="pageContent">
+    <div className="pageContent about">
         <h1>135Code</h1>
         <p>
             Paragraph with information about the 135code website
@@ -24,10 +24,10 @@ export const Home = (props) =>
         <p>
             About algorithms in general
     </p>
-        <table>{algorithms.map(algorithm => <tr key={algorithm.name}>
+        <table><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
             <td><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
             <td>{algorithm.description}</td>
-        </tr>)}</table>
+        </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>
         <p>Creators paragraph</p>
