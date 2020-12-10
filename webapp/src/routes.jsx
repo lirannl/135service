@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import { GlobalAbout } from './pages/about.jsx';
+import { Home } from './pages/home.jsx';
 import { Disclaimer } from './pages/disclaimer.jsx';
 import { Privacy } from './pages/privacy.jsx';
 import { NotFound } from './pages/notfound.jsx';
@@ -29,7 +29,7 @@ export function Routes(props) {
   return <Switch>
     <Route exact path="/disclaimer"><Disclaimer /></Route>
     <Route exact path="/privacy"><Privacy /></Route>
-    <Route exact path="/"><GlobalAbout {...props} /></Route>
+    <Route exact path="/"><Home {...props} /></Route>
     {Object.entries(props.state.funcs.value).map(fname => <Route key={fname[1]} path={`/${fname[0]}`}><ModuleRoute mod={getModule(fname[0])} modName={fname[0]} {...props} /></Route>)}
     <Route path="/">{props.state.funcs.value.unloaded ? <div className="pageContent">Loading functions...</div> : <NotFound />}</Route>
   </Switch>
