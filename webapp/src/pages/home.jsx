@@ -8,7 +8,7 @@ const algorithms = [
     },
     {
         name: "512Cipher", description: <p>
-            512Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. It seeks to build upon 135cipher.
+            512Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. It seeks to build upon 135Cipher.
         </p>, status: "WIP"
     }
 ]
