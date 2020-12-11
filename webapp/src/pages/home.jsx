@@ -4,12 +4,12 @@ const algorithms = [
     {
         name: "135cipher", description: <p>
             Paragraph with info about <b>this</b> algorithm
-        </p>
+        </p>, status: "Complete"
     },
     {
         name: "newcipher", description: <p>
             Paragraph with info about this <i>algorithm</i>
-        </p>
+        </p>, status: "WIP"
     }
 ]
 
@@ -24,9 +24,10 @@ export const Home = (props) =>
         <p>
             About algorithms in general
     </p>
-        <table><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
-            <td><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
-            <td>{algorithm.description}</td>
+        <table className="outlineTable"><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
+            <td className="smallMargins"><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
+            <td className="smallMargins">{algorithm.status}</td>
+            <td className="expanded">{algorithm.description}</td>
         </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>
