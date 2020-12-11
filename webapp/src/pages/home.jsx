@@ -20,7 +20,7 @@ export const Home = (props) =>
 
         <h2>Algorithms</h2>
         <p>
-            Below you can find a list of all the algorithms hosted on this website along with a short description of what they are intended to do. You will find a detailed write up for all completed algorithms on their respective pages.
+            Below you can find a list of all the algorithms hosted on this website along with a short description of what they are intended to be. You will find a detailed write up for all completed algorithms on their respective pages.
     </p>
         <table className="outlineTable"><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
             <td className="smallMargins"><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
