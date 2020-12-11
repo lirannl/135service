@@ -90,8 +90,8 @@ export function About(props) {
       </SyntaxHighlighter></div>
       <h2>Transposition:</h2>
       <p>This transpositional step is indicative of a matrix transposition and concerns the rearranging of the input.
-      The part that matters in this algorithm is the method of grouping.
-      By default, the input will be arranged into a matrix of two-character rows with as many columns as necessary.
+        The part that matters in this algorithm is the method of grouping.
+        By default, the input will be arranged into a matrix of two-character rows with as many columns as necessary.
         This is referred to as a General Transposition (seen in Figure 4), and is done unless the Random Transposition advanced option is enabled.</p>
       <b>Figure 4:<br />General Transposition:</b>
       <div className="box"><img alt="General Transposition" src="/135cipherInfo/figure_4.png" /></div>
