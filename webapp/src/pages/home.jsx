@@ -31,10 +31,10 @@ export const Home = (props) =>
         <h2>About The Creators</h2>
         <p>This website has been created independently by Jamal135 and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
         <table className="outlineTable"><tbody>
-            <tr><td>
-                <p className="">Jamal135 is a business student who specialises in management. Though Jamal135 also has recreational interests in engineering and the manipulation of data. Jamal135 is responsible for all algorithms hosted on this site.</p>
+            <tr><td className="smallMargins">
+                <p>Jamal135 is a business student who specialises in management. Though Jamal135 also has recreational interests in engineering and the manipulation of data. Jamal135 is responsible for all algorithms hosted on this site.</p>
             </td></tr>
-            <tr><td>
+            <tr><td className="smallMargins">
                 <p>Liran is a software developer based in Brisbane. Liran specialises in cloud computing, functional programming, and has set up the deployment infrastructure for this site. <a href="https://liranpiade.com">Link to site</a></p>
             </td></tr>
         </tbody></table>
