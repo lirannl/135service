@@ -66,12 +66,10 @@ export function About(props) {
       Designed by: Jamal135<br />
       <h2>Overview:</h2>
       <p>
-        The 135Cipher is a symmetric algorithm created in Python that involves both transposition and substitution steps.
+        135Cipher is a symmetric algorithm created in Python that involves both transposition and shifting substitution steps.
         Whilst originally intended for English plain text encryption, the scope of this cipher expanded to allow for broader potential application.
-        This encryption algorithm accepts all characters supported by base64 as input text and can support a decimal key up to 135 characters long.
-        The security of this algorithm is unknown and untested, as such it should not be utilised in any commercial or personal application.
-        This algorithm currently has no intended practical application and is purely a recreational interest.
-        A simplified summary of how the algorithm works is illustrated within Figure 1, below.
+        This encryption algorithm accepts all characters supported by utf-8 as input text and can support a decimal key up to 135 characters long.
+        The security of this algorithm is unknown and untested. A simplified summary of how the algorithm works is illustrated within Figure 1, below.
       </p>
       <b>Figure 1:<br />Encryption Process Overview</b>
       <div className="box"><img alt="Encryption Process Overview" src="/135cipherInfo/figure_1.png" /></div>
@@ -92,8 +90,8 @@ export function About(props) {
       </SyntaxHighlighter></div>
       <h2>Transposition:</h2>
       <p>This transpositional step is indicative of a matrix transposition and concerns the rearranging of the input.
-      The part that matters in this algorithm is the method of grouping.
-      By default, the input will be arranged into a matrix of two-character rows with as many columns as necessary.
+        The part that matters in this algorithm is the method of grouping.
+        By default, the input will be arranged into a matrix of two-character rows with as many columns as necessary.
         This is referred to as a General Transposition (seen in Figure 4), and is done unless the Random Transposition advanced option is enabled.</p>
       <b>Figure 4:<br />General Transposition:</b>
       <div className="box"><img alt="General Transposition" src="/135cipherInfo/figure_4.png" /></div>
@@ -112,6 +110,7 @@ export function About(props) {
         causing new unique shifting values to be calculated for all characters during the substitution step.
         This is intended to prevent any kind of dictionary attack by allowing many encrypted variants of the same input at the expense of greater length.
         Random transposition is illustrated in Figure 5.<br />
+
         Note: If random transposition is enabled for encryption,
         this option does not need to be enabled for decryption to succeed,
         as a minor key is appended which describes the number of rows that the text
@@ -150,9 +149,10 @@ export function About(props) {
       <div className="box"><img alt="Basic Substitution Example" src="/135cipherInfo/figure_7.png" /></div>
       <p>Whilst a lot of this algorithm is built to leverage the Python Random standard library,
         the generation of shifting values instead relies on a complex implementation of the formula illustrated in Figure 8.<br />
-Note: Key refers to the input key for encryption/decryption (factor).
-Val refers to a position in a list, and Length refers to the total length of the shifting sequence (alpha_sequence_length).
-Additionally, the value is rounded to a whole number.
+
+        Note: Key refers to the input key for encryption/decryption (factor).
+        Val refers to a position in a list, and Length refers to the total length of the shifting sequence (alpha_sequence_length).
+        Additionally, the value is rounded to a whole number.
       </p>
       <b>Figure 8:<br />Shifting Formula</b>
       <div className="box"><img alt="Shifting Formula" src="/135cipherInfo/figure_8.png" /></div>
@@ -233,11 +233,11 @@ Additionally, the value is rounded to a whole number.
         This entire calculation process illustrated in Figures 10 and 11 is completed
         for every character in the input text (after the transposition stage).
         With each character, a new Val value is entered to ensure a new shifting value is
-      generated despite the Key and Length values remaining unchanged.<br />
-      In addition to the shifting value that is calculated for every character in the input,
-      a unique sequence is generated for each character to shift along by the calculated value.
-      To achieve this, the Python Random standard library is leveraged to seed a random
-      re-arrangement of the pre-defined character_list, as shown in Figure 12.
+        generated despite the Key and Length values remaining unchanged.<br />
+        In addition to the shifting value that is calculated for every character in the input,
+        a unique sequence is generated for each character to shift along by the calculated value.
+        To achieve this, the Python Random standard library is leveraged to seed a random
+        re-arrangement of the pre-defined character_list, as shown in Figure 12.
       </p>
       <b>Figure 12:<br />Python Sequence Generator</b>
       <div className="box"><SyntaxHighlighter language="python" style={elemStyle}>
@@ -297,11 +297,11 @@ def generate_alpha_sequence(input):
         In summary, this is a symmetric and deterministic encryption algorithm with a built in butterfly effect
         such that any change of key or input completely changes the output.
         Given the deterministic nature of this algorithm, the transposition step can be made random to allow variation of output for the same key and input.
-        The algorithm works by Base64 encoding an input, shuffling it through a half split two row transposition,
+        The algorithm works by encoding an input, shuffling it through a half split two row transposition,
         then every character is shifted by an individually calculated shift list on an individually generated character sequence.
         Finally, all characters are shifted (except the last character) again on their same
         respective sequences by a set value given by the index of the final character.
-        Even if my approach to the functions in this algorithm may be ineffective, there may still be value
+        Even if the approach of this algorithm is ineffective, there may still be value
         in this kind of approach as generalised in Figure 16, below.
       </p>
       <b>Figure 16:<br />Generalised Process</b>
@@ -311,7 +311,7 @@ def generate_alpha_sequence(input):
         Though it should again be noted, the security of this algorithm is untested and has been created by a novice who is new to the field.
       </p>
       <p className="uncentred">Publication Date:	   		20/09/2020</p>
-      <p className="uncentred">Date Last Modified:			20/09/2020</p>
+      <p className="uncentred">Date Last Modified:			11/12/2020</p>
     </div>
   );
 }
