@@ -2,14 +2,14 @@ import React from 'react';
 
 const algorithms = [
     {
-        name: "135cipher", description: <p>
-            135cipher is a shift based deterministic symmetric encryption algorithm and represents the first algorithm created in this collaboration.<b>this</b> algorithm
-        </p>
+        name: "135Cipher", description: <p>
+            135Cipher is a shift based deterministic symmetric encryption algorithm and represents the first algorithm created in this collaboration.
+        </p>, status: "Complete"
     },
     {
-        name: "newcipher", description: <p>
-            512cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. It seeks to build upon 135cipher.<i>algorithm</i>
-        </p>
+        name: "512Cipher", description: <p>
+            512Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. It seeks to build upon 135cipher.
+        </p>, status: "WIP"
     }
 ]
 
@@ -22,9 +22,10 @@ export const Home = (props) =>
         <p>
             Below you can find a list of all the algorithms hosted on this website along with a short description of what they are intended to do. You will find a detailed write up for all completed algorithms on their respective pages.
     </p>
-        <table><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
-            <td><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
-            <td>{algorithm.description}</td>
+        <table className="outlineTable"><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
+            <td className="smallMargins"><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
+            <td className="smallMargins">{algorithm.status}</td>
+            <td className="expanded">{algorithm.description}</td>
         </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>

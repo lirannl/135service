@@ -114,6 +114,21 @@ a {
   background: unset !important;
 }
 
+.outlineTable td, tr {
+  border-width: 1pt;
+  border-style: solid;
+  border-color: #61dafb;
+}
+
+.smallMargins {
+  padding-left: 8pt;
+  padding-right: 8pt;
+}
+
+.expanded {
+  width: 100%;
+}
+
 p.uncentred {
   text-align: start;
 }
