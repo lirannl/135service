@@ -23,19 +23,25 @@ export const Home = (props) =>
             Below you can find a list of all the algorithms hosted on this website along with a short description of what they are intended to be. You will find a detailed write up for all completed algorithms on their respective pages.
     </p>
         <table className="outlineTable"><tbody>{algorithms.map(algorithm => <tr key={algorithm.name}>
-            <td className="smallMargins"><a href={`/${algorithm.name}`}>{algorithm.name}</a></td>
+            <td className="smallMargins"><a href={`/${algorithm.name.toLowerCase()}`}>{algorithm.name}</a></td>
             <td className="smallMargins">{algorithm.status}</td>
             <td className="expanded">{algorithm.description}</td>
         </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>
         <p>This website has been created independently by Jordan Amalfitano and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
-        <p>Jordan Amalfitano is a business student who specialises in management. Though Jamal135 also has recreational interests in engineering and the manipulation of data. Jamal135 is responsible for all algorithms hosted on this site.</p>
-        <p>Liran is a software developer based in Brisbane. Liran specialises in cloud computing, functional programming, and has set up the deployment infrastructure for this site. <a href="https://liranpiade.com">Link to site</a></p>
+        <table className="outlineTable"><tbody>
+            <tr><td className="smallMargins">
+                <p>Jordan Amalfitano is a business student who specialises in management. Though Jordan Amalfitano also has recreational interests in engineering and the manipulation of data. Jamal135 is responsible for all algorithms hosted on this site.</p>
+            </td></tr>
+            <tr><td className="smallMargins">
+                <p>Liran is a software developer based in Brisbane. Liran specialises in cloud computing, functional programming, and has set up the deployment infrastructure for this site. <a href="https://liranpiade.com">Link to site</a></p>
+            </td></tr>
+        </tbody></table>
 
         <h2>Contact Us</h2>
         <p>If you find a way to break one of our ciphers, have feedback about some of our algorithms, or have some enquiries regarding the content of this website, feel free to reach out to us. Please note, however, our contact address is not regularly monitored.</p>
-        
+
         <p>Contact email: 135codes@gmail.com</p>
 
     </div>

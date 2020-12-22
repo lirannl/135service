@@ -13,15 +13,16 @@ function getModule(mod) { // Safely get modules based on the API's declared func
   }
   catch (e) {
     // Unimplemented module fallback
-    return { default: (props) => <Unimplemented module={mod} />, About: (props) => <Unimplemented module={mod} /> };
+    return { default: (props) => <Unimplemented module={mod} />};
   }
 }
 
 function ModuleRoute(props) {
   const { mod, modName, ...otherProps } = props;
+  if (!mod.About) return mod.default(otherProps);
   return <Switch>
-    <Route path="*/about">{[mod.About(otherProps), <Link to={`/${modName}`}>Back to {modName}</Link>]}</Route>
-    <Route path='/'>{[mod.default(otherProps), <Link to={`/${modName}/about`}>About {modName}</Link>]}</Route>
+    <Route path="*/about"><React.Fragment>{mod.About(otherProps)} <Link to={`/${modName}`}>Back to {modName}</Link></React.Fragment></Route>
+    <Route path='/'><React.Fragment>{mod.default(otherProps)} <Link to={`/${modName}/about`}>About {modName}</Link></React.Fragment></Route>
   </Switch>
 }
 
