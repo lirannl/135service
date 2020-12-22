@@ -32,7 +32,7 @@ export const Home = (props) =>
         <p>This website has been created independently by Jordan Amalfitano and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
         <table className="outlineTable"><tbody>
             <tr><td className="smallMargins">
-                <p>Jordan is a business student who specialises in management. Though Jordan also has recreational interests in engineering and the manipulation of data. Jordan is responsible for all algorithms hosted on this site.</p>
+                <p>Jordan is a business student who specialises in management but also has recreational interests in both engineering and data manipulation. Jordan has developed all algorithms for this site.</p>
             </td></tr>
             <tr><td className="smallMargins">
                 <p>Liran is a software developer based in Brisbane. Liran specialises in cloud computing, functional programming, and has set up the deployment infrastructure for this site. <a href="https://liranpiade.com">Link to site</a></p>
