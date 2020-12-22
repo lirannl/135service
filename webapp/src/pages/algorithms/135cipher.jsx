@@ -63,7 +63,7 @@ export function About(props) {
       <h1 style={{ marginBottom: '5pt' }}>135Cipher Information</h1>
       <Button variant="outlined" color="secondary" onClick={() => history.push(`/135cipher`)} style={{ marginBottom: "20pt" }}>135Cipher</Button><br />
       Initial Creation Date: 25/05/2020<br />
-      Designed by: Jamal135<br />
+      Designed by: Jordan Amalfitano<br />
       <h2>Overview:</h2>
       <p>
         135Cipher is a symmetric algorithm created in Python that involves both transposition and shifting substitution steps.

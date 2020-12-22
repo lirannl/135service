@@ -29,8 +29,8 @@ export const Home = (props) =>
         </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>
-        <p>This website has been created independently by Jamal135 and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
-        <p>Jamal135 is a business student who specialises in management. Though Jamal135 also has recreational interests in engineering and the manipulation of data. Jamal135 is responsible for all algorithms hosted on this site.</p>
+        <p>This website has been created independently by Jordan Amalfitano and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
+        <p>Jordan Amalfitano is a business student who specialises in management. Though Jamal135 also has recreational interests in engineering and the manipulation of data. Jamal135 is responsible for all algorithms hosted on this site.</p>
         <p>Liran is a software developer based in Brisbane. Liran specialises in cloud computing, functional programming, and has set up the deployment infrastructure for this site. <a href="https://liranpiade.com">Link to site</a></p>
 
         <h2>Contact Us</h2>
