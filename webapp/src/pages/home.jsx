@@ -28,6 +28,11 @@ export const Home = (props) =>
             <td className="expanded">{algorithm.description}</td>
         </tr>)}</tbody></table>
 
+        <h2>Tools</h2>
+        <p>
+            In addition to the algorithms hosted on this website, general utility tools are also hosted on this website which can be used to encode data in different ways. All completed tools also have a detailed write up on their respective pages.
+    </p>
+
         <h2>About The Creators</h2>
         <p>This website has been created independently by Jordan Amalfitano and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
         <table className="outlineTable"><tbody>
