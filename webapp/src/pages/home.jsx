@@ -16,7 +16,7 @@ const algorithms = [
 const tools = [
     {
         name: "BaseTool", description: <p>
-            BaseTool can be used to convert integer or float numbers between bases 2-86 with added support for custom input/output character sets.
+            BaseTool can be used to convert integer or float numbers between bases 2 to 86 with added support for custom input and output character sets.
         </p>, status: "WIP"
     }
 ]
