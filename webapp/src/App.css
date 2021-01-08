@@ -121,8 +121,7 @@ a {
 }
 
 .smallMargins {
-  padding-left: 8pt;
-  padding-right: 8pt;
+  width: 15%;
 }
 
 .expanded {
