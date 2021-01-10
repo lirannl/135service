@@ -99,7 +99,8 @@ function NavBar(props) {
 export default function (props) {
   return <NavBar {...props}>
     {{
-      main: [<Tab key="" label="Home" {...a11yProps(0)} />],
+      main: [<Tab key="" label="Home" {...a11yProps(0)} />, <Tab key="basetool" label="BaseTool" {...a11yProps(0)} />,
+      <Tab key="counttool" label="CountTool" {...a11yProps(0)} />],
       items: {
         algorithms: Object.entries(props.funcNames)
           .filter(entry => typeof entry[1] === 'string') // Only attempt to load properties with string values
