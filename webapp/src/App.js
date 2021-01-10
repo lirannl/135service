@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const replacements = { // When a function's name is in the object's keys, replace it with its value
   '135cipher': '135Cipher',
-  '512cipher': '512Cipher'
+  '147cipher': '147Cipher'
 };
 
 const useStateObj = def => {
