@@ -7,8 +7,13 @@ const algorithms = [
         </p>, status: "Complete"
     },
     {
-        name: "512Cipher", description: <p>
-            512Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. It seeks to build upon 135Cipher.
+        name: "269Cipher", description: <p>
+            269Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. The goal is to build upon 135Cipher.
+        </p>, status: "WIP"
+    },
+    {
+        name: "432Compress", description: <p>
+            432Compress is a English plain text based compression algorithm that seeks to leveraging converting between bases to compress small and large inputs alike.
         </p>, status: "WIP"
     }
 ]
@@ -17,6 +22,11 @@ const tools = [
     {
         name: "BaseTool", description: <p>
             BaseTool can be used to convert integer or float numbers between bases 2 to 86 with added support for custom input and output character sets.
+        </p>, status: "WIP"
+    },
+    {
+        name: "CountTool", description: <p>
+            CountTool can be used to count and visually present the number of occurences of different characters within a provided input string.
         </p>, status: "WIP"
     }
 ]
