@@ -7,8 +7,8 @@ const algorithms = [
         </p>, status: "Complete"
     },
     {
-        name: "269Cipher", description: <p>
-            269Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. The goal is to build upon 135Cipher.
+        name: "147Cipher", description: <p>
+            147Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. The goal is to build upon 135Cipher.
         </p>, status: "WIP"
     },
     {
