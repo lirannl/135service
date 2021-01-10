@@ -3,10 +3,10 @@
         {
             "type": "pwa-node",
             "request": "launch",
-            "name": "Launch Deno",
+            "name": "Launch Denon",
             "program": "${workspaceFolder}/API/index.ts",
             "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "/home/liran/.deno/bin/denon",
+            "runtimeExecutable": "deno",
             "outputCapture": "std",
             "restart": true,
             "runtimeArgs": [
@@ -25,7 +25,7 @@
             "webRoot": "${workspaceFolder}"
         },
         {
-            "type": "node",
+            "type": "pwa-node",
             "request": "attach",
             "name": "Attach by Process ID",
             "processId": "${command:PickProcess}",
@@ -33,7 +33,6 @@
                 "<node_internals>/**"
             ]
         },
-
         {
             "type": "python",
             "request": "launch",
