@@ -13,7 +13,7 @@ const algorithms = [
     },
     {
         name: "432Compress", description: <p>
-            432Compress is a English plain text based compression algorithm that seeks to leveraging converting between bases to compress small and large inputs alike.
+            432Compress is a English plain text based compression algorithm that seeks to leverage converting between bases to compress small and large inputs alike.
         </p>, status: "WIP"
     }
 ]
