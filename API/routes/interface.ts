@@ -1,7 +1,7 @@
 import { RouterContext } from "https://deno.land/x/oak@v6.3.1/mod.ts";
 import { spawnProgram } from "../pythonProc.ts";
 
-export const py_interface = async function (ctx: RouterContext) {
+export const pyInterface = async function (ctx: RouterContext) {
   // Resolve the request's body
   const body = await (await ctx.request.body()).value;
   if(!body.operation)
@@ -24,13 +24,12 @@ export const py_interface = async function (ctx: RouterContext) {
   }
 
   // Start the cryptography program
-  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key, <Array<string>>(body.extras || []));
+  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key, ...<Array<string>>(body.extras || []));
   // Enter the text
   await proc.stdin?.write(new TextEncoder().encode(body.content));
   await proc.stdin?.close();
   // Define a buffer for error output
-  let rawErr: Uint8Array;
-  rawErr = new Uint8Array(1000);
+  const rawErr = new Uint8Array(1000);
   const code = await proc.status();
   // Read error output into the given buffer
   const outLength = await proc.stderr?.read(rawErr);
