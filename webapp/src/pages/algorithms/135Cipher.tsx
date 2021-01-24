@@ -1,32 +1,32 @@
-// @ts-nocheck
 import React from 'react';
 import { useState } from 'react';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import TextField from '@material-ui/core/TextField';
-import AdvancedOptions from '../../components/advanced_options.jsx';
+import {
+  Button, ButtonGroup, TextField,
+  CircularProgress, Checkbox, FormControlLabel
+} from '@material-ui/core';
+import AdvancedOptions from '../../components/advanced_options';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import elemStyle from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015';
 import { useHistory } from 'react-router-dom';
-import { CircularProgress, Checkbox, FormControlLabel } from '@material-ui/core';
-import { Complete } from '../../components/complete.jsx';
+import { Complete } from '../../components/complete';
+import { appState } from '../../App';
 
-function ReadOnlyTextField(props) {
-  const OutputField = React.useRef(null);
-  return <span ref={OutputField}><TextField noValidate multiline
+function ReadOnlyTextField(props: { result: string, resLabel: string, }) {
+  const OutputField = React.useRef(null as HTMLSpanElement | null);
+  return <span ref={OutputField}><TextField multiline
     value={props.result}
     label={props.resLabel}
     onFocus={safeSelect}
     onClick={safeSelect}
     inputProps={{ readOnly: 'readonly' }}
     id="OutputField" /><Button style={{ marginTop: '10pt' }} color="default" onClick={() => {
-      OutputField.current.firstChild.lastChild.firstChild.select();
+      (OutputField as any).current.firstChild.lastChild.firstChild.select();
       document.execCommand("Copy");
     }}>Copy to clipboard</Button></span>
 }
 
-function FieldWithPasteButton(props) {
-  const Field = React.useRef(null);
+function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
+  const Field = React.useRef(null as HTMLSpanElement | null);
   return <span ref={Field}>
     <TextField
       id="Text"
@@ -39,13 +39,13 @@ function FieldWithPasteButton(props) {
       }
       } />
     <Button style={{ marginTop: '16pt', marginLeft: '-5pt' }} tabIndex="-1" color="default" onClick={() => {
-      Field.current.firstChild.lastChild.firstChild.select();
+      (Field.current as any).firstChild.lastChild.firstChild.select();
       props.setText('');
     }}>Clear</Button>
   </span>
 }
 
-async function safeSelect(event) {
+async function safeSelect(event: { target: any, preventDefault: () => void }) {
   event.preventDefault();
   if (event.target.value !== '') {
     try {
@@ -56,7 +56,7 @@ async function safeSelect(event) {
 }
 
 // Every module needs an About(props) function that returns a per-module about page
-export function About(props) {
+export function About() {
   const history = useHistory();
   return (
     <div className="pageContent about">
@@ -90,8 +90,8 @@ export function About(props) {
       </SyntaxHighlighter></div>
       <h2>Transposition:</h2>
       <p>This transpositional step is indicative of a matrix transposition and concerns the rearranging of the input.
-        The part that matters in this algorithm is the method of grouping.
-        By default, the input will be arranged into a matrix of two-character rows with as many columns as necessary.
+      The part that matters in this algorithm is the method of grouping.
+      By default, the input will be arranged into a matrix of two-character rows with as many columns as necessary.
         This is referred to as a General Transposition (seen in Figure 4), and is done unless the Random Transposition advanced option is enabled.</p>
       <b>Figure 4:<br />General Transposition:</b>
       <div className="box"><img alt="General Transposition" src="/135cipherInfo/figure_4.png" /></div>
@@ -316,14 +316,14 @@ def generate_alpha_sequence(input):
   );
 }
 
-export default function (props) {
+const Cipher = (props: { state: appState }) => {
   const { factor, content, result, loading, resLabel, classes, sendInput } = props.state;
   const [randomPattern, setRandomPattern] = useState(false);
   const history = useHistory();
 
-  const send = (action) => result.set(sendInput(factor.value, content.value, action, "135cipher", result, loading.set, resLabel.set, [
+  const send = (action: string) => result.set(sendInput(factor.value, content.value, action, "135cipher", result, loading.set, resLabel.set, [
     randomPattern ? '+' : '-'
-  ]));
+  ])!);
 
   return <div className="pageContent">
 
@@ -350,7 +350,7 @@ export default function (props) {
     </form>
     <Complete />
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
-    <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? null : "hidden"} /></React.Fragment>
+    <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
     <AdvancedOptions>
       <FormControlLabel
         control={
@@ -361,3 +361,5 @@ export default function (props) {
     </AdvancedOptions>
   </div>;
 }
+
+export default Cipher;

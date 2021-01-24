@@ -1,4 +1,3 @@
-// @ts-nocheck
 const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 export async function getFuncs()
@@ -11,5 +10,5 @@ export async function getFuncs()
     });
     const resBody = await response.json();
     if (response.status !== 200) return [];
-    return resBody;
+    return resBody as {func: string, category: string}[];
 }

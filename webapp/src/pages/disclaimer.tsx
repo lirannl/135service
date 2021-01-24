@@ -1,8 +1,7 @@
-// @ts-nocheck
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function Disclaimer(props){
+export function Disclaimer(){
     return <React.Fragment>
         <div className="pageContent">
             <p className="fullDetails"><b>Disclaimer:</b><br/>

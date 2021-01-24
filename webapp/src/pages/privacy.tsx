@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export function Privacy(props){
+export function Privacy(){
     return <React.Fragment>
         <div className="pageContent">
             <p className="fullDetails"><b>Privacy Policy:</b><br />
