@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
+  tabContainer: {
+    flexDirection: "row-reverse"
+  }
 }));
 
 const getVisibleElements = (children: { main: JSX.Element[], items: { [category: string]: JSX.Element[] } },
@@ -106,6 +109,7 @@ function NavBar(props: {
 }
 
 export const NavCreator = (props: { funcNames: any }): JSX.Element & { props: { children: KeyedElement[] } } => {
+  const classes = useStyles();
   const anchorEl = useStateObj(null as Element | null);
   const selectedCategory = useStateObj('');
   const selectedTab = useStateObj(0 as number | null);
@@ -116,7 +120,7 @@ export const NavCreator = (props: { funcNames: any }): JSX.Element & { props: { 
     return Object.assign({}, acc, { [curr.category]: [newTab] });
   }, {} as { [category: string]: JSX.Element[] });
   const NavbarData = {
-    main: [<Tab key="" label="Home" />, <Tab icon={<ExpandMore/>} key="menuOpener" onClick={event => {
+    main: [<Tab key="" label="Home" />, <Tab className={classes.tabContainer} icon={<ExpandMore />} key="menuOpener" onClick={event => {
       anchorEl.set(event.currentTarget);
     }}
       label={selectedCategory.value || "select"} disableTouchRipple />],

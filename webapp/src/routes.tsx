@@ -39,7 +39,7 @@ export function Routes(props: { state: appState }) {
     <Route exact path="/disclaimer"><Disclaimer /></Route>
     <Route exact path="/privacy"><Privacy /></Route>
     <Route exact path="/"><Home {...props} /></Route>
-    {Object.values(props.state.funcs.value).map((fname: {func: string, category: string}) => <Route key={fname.func} path={`/${fname.func}`}>
+    {Object.values(props.state.funcs.value).map((fname: {func: string, category: string}, index) => <Route key={`${fname.func}.${index}`} path={`/${fname.func}`}>
       <ModuleRoute mod={getModule(fname.func, fname.category)} modName={fname.func} {...props} />
     </Route>
     )}
