@@ -71,11 +71,12 @@ function NavBar(props: {
     history.push(`/${target.key}`);
   };
 
+  const defaultCategory = "algorithms";
   const adjustCategory = () => {
     const currentPath = history.location.pathname.split('/')[1];
     if (Object.keys(funcCategories)[0] === "unloaded") return;
     const loadedFuncCategories = funcCategories as { func: string, category: string }[];
-    const categoryToSelect = loadedFuncCategories.find(elem => elem.func === currentPath)?.category || '';
+    const categoryToSelect = loadedFuncCategories.find(elem => elem.func === currentPath)?.category || defaultCategory || '';
     const barElems = getVisibleElements({ main: children.main, items: children.items }, categoryToSelect);
     categorySetter(categoryToSelect);
     selectedTab.set(barElems.findIndex(e => e.key === currentPath));
