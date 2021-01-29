@@ -3,28 +3,20 @@ import { spawnProgram } from "../pythonProc.ts";
 
 export const pyInterface = async function (ctx: RouterContext) {
   // Resolve the request's body
-  const body = await (await ctx.request.body()).value;
-  if(!body.operation)
-  {
+  const body = await ctx.request.body().value;
+  if (!body.operation) {
     ctx.response.status = 400;
     ctx.response.body = `No operation specified for algorithm "${ctx.params.algorithm}".`;
     return;
   }
-  if(typeof body.key !== "string")
-  {
+  if (typeof body.key !== "string" && body.key) {
     ctx.response.status = 400;
-    ctx.response.body = {message: "The provided key must be of type string."};
-    return;
-  }
-  try {(BigInt(body.key))}
-  catch (e) {
-    ctx.response.status = 400;
-    ctx.response.body = {message: "The provided key must be an integer."};
+    ctx.response.body = { message: "The provided key must be of type string." };
     return;
   }
 
   // Start the cryptography program
-  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key, ...<Array<string>>(body.extras || []));
+  const proc = spawnProgram(ctx.params.algorithm || '', body.operation, body.key, ...(body.extras || []));
   // Enter the text
   await proc.stdin?.write(new TextEncoder().encode(body.content));
   await proc.stdin?.close();
@@ -39,11 +31,11 @@ export const pyInterface = async function (ctx: RouterContext) {
   const outputString = new TextDecoder().decode(rawOutput);
   if (code.success) {
     ctx.response.status = 200;
-    ctx.response.body = {message: outputString};
+    ctx.response.body = { message: outputString };
   }
   else {
     ctx.response.status = 400;
-    console.log(new TextDecoder().decode(rawErr.subarray(0, outLength!-1)));
-    ctx.response.body = {message: new TextDecoder().decode(rawErr.subarray(0, outLength!-1))};
+    console.log(new TextDecoder().decode(rawErr.subarray(0, outLength! - 1)));
+    ctx.response.body = { message: new TextDecoder().decode(rawErr.subarray(0, outLength! - 1)) };
   }
 }

@@ -2,7 +2,7 @@ import { Context } from "https://deno.land/x/oak@v6.3.1/mod.ts";
 
 const subFolderReader = async (subFolder: Deno.DirEntry) => {
   const files = [...Deno.readDirSync(`${Deno.env.toObject().BIN_DIR}/${subFolder.name}`)]
-    .filter(f => f.isFile);
+    .filter(f => f.isFile && !f.name.startsWith('.'));
   const funcs = files.map(file => file.name.split('.')[0]);
   return await Promise.all(funcs.map(async func => {
     const subProc = Deno.run({
