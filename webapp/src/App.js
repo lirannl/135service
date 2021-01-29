@@ -84,7 +84,7 @@ function App() {
         <NavigationBar funcNames={state.funcs.value} />
         <Routes state={state} />
         <div className="disclaimer">
-          <span style={{ float: "left" }}>Disclaimer: Use at your own risk, <Link to="/disclaimer">read full disclaimer</Link>.</span>
+          <span style={{ float: "left" }}> <Link to="/disclaimer">Use At Own Risk</Link>.</span>
           <span style={{ float: "right" }}> <Link to="/privacy">Privacy Policy</Link></span>
         </div>
         <div className="credits">Made by Jordan Amalfitano and Liran Piade, 2020</div>
