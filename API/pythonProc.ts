@@ -3,5 +3,4 @@ export const spawnProgram = (algorithm: string, mode: string) => Deno.run({
     stdin: "piped",
     stdout: "piped",
     stderr: "piped",
-    cwd: Deno.env.toObject().BIN_DIR
 });
