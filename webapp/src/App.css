@@ -136,7 +136,3 @@ p {
   font-size: smaller;
   font-weight: lighter;
 }
-
-.MuiTab-wrapper {
-  flex-direction: inherit !important;
-}

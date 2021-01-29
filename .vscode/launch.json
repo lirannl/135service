@@ -6,16 +6,42 @@
             "name": "Launch Deno",
             "program": "${workspaceFolder}/API/index.ts",
             "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "deno",
+            "runtimeExecutable": "/home/liran/.deno/bin/denon",
             "outputCapture": "std",
-            "envFile": "${workspaceFolder}/.env",
+            "restart": true,
             "runtimeArgs": [
                 "run",
                 "--inspect-brk=127.0.0.1:9229",
                 "--allow-all"
             ],
             "attachSimplePort": 9229
+        },
+        {
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "request": "attach",
+            "type": "pwa-chrome",
+            "urlFilter": "localhost*",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach by Process ID",
+            "processId": "${command:PickProcess}",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+
+        {
+            "type": "python",
+            "request": "launch",
+            "name": "Launch python script",
+            "program": "${file}",
+            "args": [
+                "-h"
+            ]
         }
-        
     ]
 }
