@@ -3,7 +3,7 @@
 
 A deno-powered web API and a React-based frontend for custom algorithms
 
-To interface, make an http POST request with a json body containing the attributes "key" - integer, and "text" - the text to encrypt/decrypt. You may also include an "extras" attribute, which would be an array, containing extra arguments (the supported arguments vary per-algorithm).
+To interface, make an http POST request with a json body containing the attributes "operation" to determine which function to run, and "args", which supplies the python function with arguments.
 
 Example request:
 ![https://135code.com:8443/135cipher](https://i.imgur.com/R3VgvQe.png)
