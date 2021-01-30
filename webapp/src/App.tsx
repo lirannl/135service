@@ -8,24 +8,23 @@ import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core';
 import { getFuncs } from './requests/getFuncs';
 import { BrowserRouter, Link } from 'react-router-dom';
 
-function sendInput(key: string, text: string, mode: string, algorithm: string,
+async function sendInput(func: string, algorithm: string,
   result: stateObj<string>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setResLabel: React.Dispatch<React.SetStateAction<string>>, extras: string[]) {
-  if (key === '' || text === '') {
-    alert(`Sorry, you must input a key and content to ${mode}.`);
-    return result.value;
+  setResLabel: React.Dispatch<React.SetStateAction<string>>, args: Object) {
+  setLoading(true);
+  setResLabel(`${capitalise(func)}ed result`);
+  try {
+    const res = await query(algorithm, func, args);
+    setLoading(false);
+    result.set(res.result);
+    return res as { response: Response, result: any };
   }
-  else {
-    setLoading(true);
-    setResLabel(`${capitalise(mode)}ed result`);
-    query(algorithm, mode, key, text, extras).then(res => {
-      setLoading(false);
-      result.set(res);
-    }).catch(e => {
-      result.set("Failed");
-      setLoading(false);
-    });
+  catch (e) {
+    result.set("Failed");
+    setLoading(false);
+    return;
   }
+
 }
 
 const theme = createMuiTheme({
@@ -52,9 +51,10 @@ export interface appState {
   resLabel: stateObj<string>;
   funcs: stateObj<{ unloaded: true } | { func: string, category: string }[]>;
   loading: stateObj<boolean>
-  sendInput: (key: string, text: string, mode: string, algorithm: string,
+  sendInput: (mode: string, algorithm: string,
     result: stateObj<string>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    setResLabel: React.Dispatch<React.SetStateAction<string>>, extras: string[]) => string | undefined;
+    setResLabel: React.Dispatch<React.SetStateAction<string>>, args: Object) =>
+    Promise<{ result: string | undefined, response: Response } | undefined>;
 }
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
     resLabel: useStateObj("Result"),
     funcs: useStateObj({ unloaded: true } as any),
     loading: useStateObj(false as boolean),
-    sendInput: sendInput
+    sendInput
   }
 
   const setFuncs = state.funcs.set;

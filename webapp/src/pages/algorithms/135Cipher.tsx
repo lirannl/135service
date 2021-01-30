@@ -10,6 +10,7 @@ import elemStyle from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015';
 import { useHistory } from 'react-router-dom';
 import { Complete } from '../../components/complete';
 import { appState } from '../../App';
+import { capitalise } from '../../utils';
 
 function ReadOnlyTextField(props: { result: string, resLabel: string, }) {
   const OutputField = React.useRef(null as HTMLSpanElement | null);
@@ -321,9 +322,16 @@ const Cipher = (props: { state: appState }) => {
   const [randomPattern, setRandomPattern] = useState(false);
   const history = useHistory();
 
-  const send = (action: string) => result.set(sendInput(factor.value, content.value, action, "135cipher", result, loading.set, resLabel.set, [
-    randomPattern ? '+' : '-'
-  ])!);
+  const send = async (action: string) => {
+    const res = await sendInput(action, "135cipher", result, loading.set, resLabel.set, {
+      text: content.value,
+      factor: factor.value,
+      argument: randomPattern ? "+" : undefined,
+    });
+    if (res?.response.ok)
+      result.set(res?.result!);
+    else result.set(`${capitalise(action)}ion failed.`);
+  };
 
   return <div className="pageContent">
 
