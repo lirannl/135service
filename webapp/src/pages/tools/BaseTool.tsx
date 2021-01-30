@@ -126,8 +126,8 @@ const BaseTool = (props: { state: appState }) => {
       const target = event.target as unknown as { value: string }[];
       const reqArgs = {
         inputString: target[0].value,
-        inputBase: target[1].value,
-        outputBase: target[2].value || undefined,
+        inBase: target[1].value,
+        outBase: target[2].value || undefined,
         inputSet: inputSet.value || undefined,
         outputSet: outputSet.value || undefined,
         fracPlaces: accuracy.value || undefined
