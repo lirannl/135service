@@ -1,7 +1,7 @@
 import { RouterContext } from "https://deno.land/x/oak@v6.3.1/mod.ts";
 import { spawnProgram } from "../pythonProc.ts";
 
-export const py_interface = async function (ctx: RouterContext) {
+export const pyInterface = async function (ctx: RouterContext) {
   // Resolve the request's body
   const body = await (await ctx.request.body()).value;
   if(!body.operation)

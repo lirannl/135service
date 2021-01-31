@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   Button, ButtonGroup, TextField,
   CircularProgress,
@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { appState } from '../../App';
 import { BetaTag } from '../../components/beta';
 import { stateObj, useStateObj } from '../../utils';
+import { focusable } from '../../focusable';
 
 const useStyles = makeStyles({
   singleCharTextField: {
@@ -72,28 +73,13 @@ export function About() {
   );
 }
 
-const CharInputField = (props: { data: stateObj<string>, i: number, elemRefs: MutableRefObject<HTMLElement>[] }) => {
-  const { data, i, elemRefs } = props;
-  const { singleCharTextField } = useStyles();
-  const ref = useRef({} as HTMLElement);
-  elemRefs.push(ref);
-  return <TextField
-    className={singleCharTextField}
-    value={data.value[i] || ''}
-    onChange={(event) => {
-      const targetNum = event.target.value === '' ? i : i + 2;
-      const elem = elemRefs[targetNum];
-      data.set(data.value.slice(undefined, i)
-        .concat(event.target.value, data.value.slice(i + 1)));
-    }}
-  />
-};
-
 const TableRow: (props: { data: stateObj<string> | string, rowName?: string }) => JSX.Element & { props: { children: JSX.Element[] } } = ({ data, rowName }) => {
+  const Elem: any = forwardRef((props, ref: any) => <input {...props} ref={ref} />)
+  const FocusableTextField = focusable(Elem) as any;
   const { singleCharTextField } = useStyles();
+  const selectionIndex = useStateObj(NaN);
   const Arr = Array.from(Array(86).keys());
   const rowTitle = <td>{rowName ? <Typography>{rowName}</Typography> : null}</td>
-  const elemRefs = [] as MutableRefObject<HTMLElement>[];
   if (typeof data === "string") {
     return <tr>{[rowTitle].concat(
       Arr.map(i => <td key={i}>
@@ -102,9 +88,26 @@ const TableRow: (props: { data: stateObj<string> | string, rowName?: string }) =
     )}</tr>
   }
   else {
-    return <tr>{[rowTitle].concat(
+    return <tr onBlurCapture={() => selectionIndex.set(NaN)}>{[rowTitle].concat(
       Arr.map(i => <td key={i}>
-        <CharInputField data={data} i={i} elemRefs={elemRefs}/>
+        <FocusableTextField
+          className={singleCharTextField}
+          value={data.value[i] || ''}
+          variant="standard"
+          focus={selectionIndex.value === i}
+          onChange={(event: any) => {
+            data.set(data.value.slice(undefined, i)
+              .concat(event.target.value, data.value.slice(i + 1)));
+            const newIdx = (event.target.value === '') ? i - 1 : data.value.length + 1;
+            if (newIdx < 0) selectionIndex.set(0);
+            else selectionIndex.set(newIdx);
+          }}
+          onKeyUpCapture={(event: any) => {
+            if (event.code === "ArrowLeft") selectionIndex.set(selectionIndex.value - 1);
+            else if (event.code === "ArrowRight") selectionIndex.set(selectionIndex.value + 1);
+          }}
+          onFocusCapture={(event: any) => selectionIndex.set(i)}
+        />
       </td>))}</tr>;
   }
 }
