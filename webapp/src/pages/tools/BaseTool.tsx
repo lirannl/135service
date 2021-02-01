@@ -1,68 +1,41 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import {
   Button, ButtonGroup, TextField,
   CircularProgress,
-  Typography,
-  makeStyles
+  Typography, Slider
 } from '@material-ui/core';
 import AdvancedOptions from '../../components/advanced_options';
 import { useHistory } from 'react-router-dom';
 import { appState } from '../../App';
 import { BetaTag } from '../../components/beta';
 import { stateObj, useStateObj } from '../../utils';
-import { focusable } from '../../focusable';
+import { TabularStringInput } from '../../components/tabularStringInput';
+import { ReadOnlyTextField } from '../../components/resultField';
 
-const useStyles = makeStyles({
-  singleCharTextField: {
-    width: '1ch'
-  },
-  smallTextField: {
-    width: '15ch'
-  },
-  tinyTextField: {
-    width: '4ch'
-  }
-});
+const NumBaseSlider = (props: { value: stateObj<number>, readonly max: number, readonly label: string }) => <div style={{ display: 'inline-flex' }}>
+  <Typography style={{ paddingInline: '2ch' }}>{props.label}</Typography><Slider
+    style={{ width: '15vw' }}
+    valueLabelDisplay='on' defaultValue={10}
+    step={1} min={2} max={props.max} onChangeCommitted={(_, value) => {
+      props.value.value = value as number;
+    }} />
+</div>
 
-function ReadOnlyTextField(props: { result: string, resLabel: string, }) {
-  const OutputField = React.useRef(null as HTMLSpanElement | null);
-  return <span ref={OutputField}><TextField multiline
-    value={props.result}
-    label={props.resLabel}
-    onFocus={safeSelect}
-    onClick={safeSelect}
-    inputProps={{ readOnly: 'readonly' }}
-    id="OutputField" /></span>
-}
-
-function InputField(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
-  const Field = React.useRef(null as HTMLSpanElement | null);
-  return <span ref={Field}>
-    <TextField
-      id="Text"
+function InputField(props: { value: stateObj<string>, inBase: stateObj<number>, outBase: stateObj<number> }) {
+  return <div>
+    <NumBaseSlider max={86} value={props.inBase} label="Input base" />
+    <NumBaseSlider max={86} value={props.outBase} label="Output base" />
+    <br /><TextField
       label="Number to convert"
-      value={props.text}
+      value={props.value.value}
       onChange={(event) => {
-        props.setText(event.target.value);
+        props.value.value = event.target.value;
       }
       } />
-    <TextField id="inputBase" type="number" label="Input base" />
-    <TextField id="outputBase" type="number" label="Output base" />
     <Button style={{ marginTop: '16pt', marginLeft: '-5pt' }} tabIndex="-1" color="default" onClick={() => {
-      (Field.current as any).firstChild.lastChild.firstChild.select();
-      props.setText('');
+      props.value.value = '';
     }}>Clear</Button>
-  </span>
-}
-
-async function safeSelect(event: { target: any, preventDefault: () => void }) {
-  event.preventDefault();
-  if (event.target.value !== '') {
-    try {
-      event.target.select();
-    }
-    catch (ignored) { }
-  }
+  </div>
 }
 
 // Every module needs an About(props) function that returns a per-module about page
@@ -73,50 +46,28 @@ export function About() {
   );
 }
 
-const TableRow: (props: { data: stateObj<string> | string, rowName?: string }) => JSX.Element & { props: { children: JSX.Element[] } } = ({ data, rowName }) => {
-  const Elem: any = forwardRef((props, ref: any) => <input {...props} ref={ref} />)
-  const FocusableTextField = focusable(Elem) as any;
-  const { singleCharTextField } = useStyles();
-  const selectionIndex = useStateObj(NaN);
-  const Arr = Array.from(Array(86).keys());
-  const rowTitle = <td>{rowName ? <Typography>{rowName}</Typography> : null}</td>
-  if (typeof data === "string") {
-    return <tr>{[rowTitle].concat(
-      Arr.map(i => <td key={i}>
-        <Typography className={singleCharTextField}>{data[i]}</Typography>
-      </td>)
-    )}</tr>
-  }
-  else {
-    return <tr onBlurCapture={() => selectionIndex.set(NaN)}>{[rowTitle].concat(
-      Arr.map(i => <td key={i}>
-        <FocusableTextField
-          className={singleCharTextField}
-          value={data.value[i] || ''}
-          variant="standard"
-          focus={selectionIndex.value === i}
-          onChange={(event: any) => {
-            data.set(data.value.slice(undefined, i)
-              .concat(event.target.value, data.value.slice(i + 1)));
-            const newIdx = (event.target.value === '') ? i - 1 : data.value.length + 1;
-            if (newIdx < 0) selectionIndex.set(0);
-            else selectionIndex.set(newIdx);
-          }}
-          onKeyUpCapture={(event: any) => {
-            if (event.code === "ArrowLeft") selectionIndex.set(selectionIndex.value - 1);
-            else if (event.code === "ArrowRight") selectionIndex.set(selectionIndex.value + 1);
-          }}
-          onFocusCapture={(event: any) => selectionIndex.set(i)}
-        />
-      </td>))}</tr>;
-  }
-}
+const defaultCharSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/~!@#$%^&*;=?<>[]:"{},`';
+
+const TableHeaderCell = (props: { children?: string }) => <Typography
+  className='scrollableTableHeader'
+  style={{ paddingInlineEnd: '1ch', display: 'table-cell' }}>
+  {props.children || ''}
+</Typography>
+
+const Row = (props: { label: string, value: stateObj<string> }) => <div style={{ display: "table-row" }}>
+  <TableHeaderCell>{props.label}</TableHeaderCell>
+  <TabularStringInput maxLength={86} value={props.value} />
+</div>
 
 const BaseTool = (props: { state: appState }) => {
-  const { content, result, loading, resLabel, classes, sendInput } = props.state;
+  const { loading, classes, sendInput } = props.state;
+  const result = useStateObj('');
+  const numberStr = useStateObj('');
   const history = useHistory();
-  const inputSet = useStateObj('');
-  const outputSet = useStateObj('');
+  const inBase = useStateObj(10);
+  const outBase = useStateObj(10);
+  const inputSet = useStateObj(defaultCharSet);
+  const outputSet = useStateObj(defaultCharSet);
   const accuracy = useStateObj('');
 
   return <div className="pageContent">
@@ -126,11 +77,10 @@ const BaseTool = (props: { state: appState }) => {
     <Button variant="outlined" color="secondary" onClick={() => history.push(`/basetool/about`)} style={{ marginBottom: "20pt" }}>About</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={async (event) => {
       event.preventDefault();
-      const target = event.target as unknown as { value: string }[];
       const reqArgs = {
-        inputString: target[0].value,
-        inBase: target[1].value,
-        outBase: target[2].value || undefined,
+        inputString: numberStr.value,
+        inBase: inBase.value,
+        outBase: outBase.value,
         inputSet: inputSet.value || undefined,
         outputSet: outputSet.value || undefined,
         fracPlaces: accuracy.value || undefined
@@ -140,31 +90,44 @@ const BaseTool = (props: { state: appState }) => {
       }
       const res = await sendInput("convert", "basetool", result, loading.set, () => { }, reqArgs);
       if (res?.result === "" && res.response.ok) {
-        result.set("0");
+        result.value = "0";
       }
       else if (!res?.response.ok) {
-        result.set("Base conversion failed.");
+        result.value = "Base conversion failed.";
       }
     }}>
       <div>
-        <InputField text={content.value} setText={content.set} />
+        <InputField value={numberStr} inBase={inBase} outBase={outBase} />
       </div>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Convert</Button>
       </ButtonGroup>
     </form>
     <BetaTag />
-    <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
-    <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
+    <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel="Converted number" /><br />
+    <CircularProgress color="primary" className={loading.value ? undefined : "hidden"} />
     <AdvancedOptions>
-      <TextField value={accuracy.value} onChange={(event) => accuracy.set(event.target.value)} label="Fractional accuracy" />
-      <table>
-        <tbody>
-          {TableRow({ data: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/~!@#$%^&*;=?<>[]:\"{},`" })}
-          {TableRow({ data: inputSet, rowName: "Input characterset" })}
-          {TableRow({ data: outputSet, rowName: "Output characterset" })}
-        </tbody>
-      </table>
+      <div style={{ display: 'inline-flex' }}>
+        <Typography style={{ paddingInlineEnd: '2ch' }}>Fractional Places</Typography><Slider
+          style={{ width: '20vw' }}
+          valueLabelDisplay='on' defaultValue={5}
+          step={1} min={0} max={7} onChangeCommitted={(_, value) => {
+            accuracy.value = `${value}`;
+          }} />
+      </div>
+      <div className="flexBox">
+        <div className="scrollableTable">
+          <div style={{ display: 'table-row' }}>
+            <TableHeaderCell />
+            {Array.from(Array(86).keys()).map(i => <Typography key={i}
+              style={{ display: 'table-cell', paddingInline: '1pt' }}>
+              {i}
+            </Typography>)}
+          </div>
+          <Row label="Input Characterset" value={inputSet} />
+          <Row label="Output Characterset" value={outputSet} />
+        </div>
+      </div>
     </AdvancedOptions>
   </div>;
 }

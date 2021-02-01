@@ -8,10 +8,29 @@ export function capitalise(input: string) {
 
 export interface stateObj<T> {
     value: T;
-    set: React.Dispatch<React.SetStateAction<T>>;
+    readonly set: React.Dispatch<React.SetStateAction<T>>;
 }
 
 export const useStateObj = function <T>(def: T): stateObj<T> {
     const [val, setVal] = useState(def);
-    return { value: val, set: setVal };
+    const tgt = {
+        set: setVal,
+        set value(v: T) {
+            setVal(v);
+        },
+        get value(): T {
+            // Reassign modified object
+            if (typeof val === "object") {
+                const valObj = val as unknown as T & object;
+                return new Proxy(valObj, {
+                    set: (_, p, value) => {
+                        setVal(Object.assign({}, valObj, { [p]: value }));
+                        return true;
+                    }
+                })
+            }
+            return val;
+        }
+    };
+    return tgt;
 }

@@ -32,6 +32,7 @@
 }
 
 .pageContent {
+  width: 90vw;
   padding-top: 30pt;
   margin-top: auto;
   margin-bottom: auto;
@@ -139,4 +140,21 @@ p {
 
 .MuiTab-wrapper {
   flex-direction: inherit !important;
+}
+
+.scrollableTable {
+  display: inline-block;
+  overflow-x: scroll;
+  max-width: inherit;
+}
+
+.scrollableTableHeader {
+  z-index: 1;
+  background-color: #282c34;
+  position: sticky;
+  left: 0;
+}
+
+.flexBox {
+  display: flex;
 }

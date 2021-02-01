@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Tabs, Tab, Box, Menu, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -51,10 +51,9 @@ function NavBar(props: {
   children: {
     main: JSX.Element[],
     menu: JSX.Element,
-    anchorEl: stateObj<Element | null>,
     funcCategories: { func: string, category: string }[] | { unloaded: true },
     selectedCategory: stateObj<string>,
-    selectedTab: stateObj<number | null>,
+    selectedTab: stateObj<number>,
     items: { [category: string]: JSX.Element[] }
   }
 }) {
@@ -111,9 +110,10 @@ function NavBar(props: {
 
 export const NavCreator = (props: { funcNames: any }): JSX.Element & { props: { children: KeyedElement[] } } => {
   const classes = useStyles();
-  const anchorEl = useStateObj(null as Element | null);
+  const menuOpen = useStateObj(false);
   const selectedCategory = useStateObj('');
-  const selectedTab = useStateObj(0 as number | null);
+  const selectedTab = useStateObj(0);
+  const anchor = useRef({} as Element);
   const items = props.funcNames.unloaded ? {} : (props.funcNames as { func: string, category: string }[]).reduce((acc, curr) => {
     const newTab = <Tab key={curr.func} label={curr.func} />
     if (acc[curr.category])
@@ -121,27 +121,28 @@ export const NavCreator = (props: { funcNames: any }): JSX.Element & { props: { 
     return Object.assign({}, acc, { [curr.category]: [newTab] });
   }, {} as { [category: string]: JSX.Element[] });
   const NavbarData = {
-    main: [<Tab key="" label="Home" />, <Tab className={classes.tabContainer} icon={<ExpandMore />} key="menuOpener" onClick={event => {
-      anchorEl.set(event.currentTarget);
+    main: [<Tab key="" label="Home" />, <Tab innerRef={anchor} className={classes.tabContainer} icon={<ExpandMore />} key="menuOpener" onClick={event => {
+      event.preventDefault();
+      menuOpen.value = true;
     }}
       label={selectedCategory.value || "select"} disableTouchRipple />],
     menu: <Menu
       keepMounted
-      anchorEl={anchorEl.value}
-      open={Boolean(anchorEl.value)}
+      anchorEl={anchor.current}
+      open={menuOpen.value}
     >
       {props.funcNames.unloaded ? [] : (props.funcNames as { func: string, category: string }[])
         .reduce((categories, entry) => {
           if (categories.includes(entry.category)) return categories;
           return categories.concat(entry.category);
         }, [] as string[]).map(category => <MenuItem key={category} onClick={() => {
-          if (selectedCategory.value !== category) selectedTab.set(null);
-          selectedCategory.set(category);
-          anchorEl.set(null);
-        }}>{category}</MenuItem>)}
-    </Menu>,
+          if (selectedCategory.value !== category) selectedTab.value = 1;
+          selectedCategory.value = category;
+          menuOpen.value = false;
+        }}>{category}</MenuItem>)
+      }
+    </Menu >,
     funcCategories: props.funcNames as { func: string, category: string }[] | { unloaded: true },
-    anchorEl,
     selectedCategory,
     selectedTab,
     items

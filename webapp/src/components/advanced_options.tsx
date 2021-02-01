@@ -1,13 +1,12 @@
 import React from 'react';
 import { IconButton, Collapse } from "@material-ui/core";
-import { ExpandMore } from '@material-ui/icons';
+import { ExpandMore, ExpandLess } from '@material-ui/icons';
 
-export default function AdvancedOptionsCard(props: { children: any }) {
+export default function AdvancedOptionsCard(props: { children: JSX.Element | JSX.Element[], readonly keepMounted?: true }) {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   return (
     <div>
       <IconButton
@@ -17,10 +16,10 @@ export default function AdvancedOptionsCard(props: { children: any }) {
         aria-label="show options"
       >
         <span className="ExpandLabel">Advanced Options</span>
-        <ExpandMore />
+        {expanded ? <ExpandLess /> : <ExpandMore />}
       </IconButton>
       <Collapse in={expanded} timeout="auto">
-        {props.children}
+        {props.keepMounted || expanded ? props.children : null}
       </Collapse>
     </div>
   );

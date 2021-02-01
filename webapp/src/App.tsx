@@ -45,10 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export interface appState {
   classes: Record<"root", string>;
-  factor: stateObj<string>;
-  content: stateObj<string>;
-  result: stateObj<string>;
-  resLabel: stateObj<string>;
   funcs: stateObj<{ unloaded: true } | { func: string, category: string }[]>;
   loading: stateObj<boolean>
   sendInput: (mode: string, algorithm: string,
@@ -60,10 +56,6 @@ export interface appState {
 function App() {
   const state: appState = {
     classes: useStyles(),
-    factor: useStateObj(''),
-    content: useStateObj(''),
-    result: useStateObj(''),
-    resLabel: useStateObj("Result"),
     funcs: useStateObj({ unloaded: true } as any),
     loading: useStateObj(false as boolean),
     sendInput

@@ -10,21 +10,8 @@ import elemStyle from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015';
 import { useHistory } from 'react-router-dom';
 import { Complete } from '../../components/complete';
 import { appState } from '../../App';
-import { capitalise } from '../../utils';
-
-function ReadOnlyTextField(props: { result: string, resLabel: string, }) {
-  const OutputField = React.useRef(null as HTMLSpanElement | null);
-  return <span ref={OutputField}><TextField multiline
-    value={props.result}
-    label={props.resLabel}
-    onFocus={safeSelect}
-    onClick={safeSelect}
-    inputProps={{ readOnly: 'readonly' }}
-    id="OutputField" /><Button style={{ marginTop: '10pt' }} color="default" onClick={() => {
-      (OutputField as any).current.firstChild.lastChild.firstChild.select();
-      document.execCommand("Copy");
-    }}>Copy to clipboard</Button></span>
-}
+import { capitalise, useStateObj } from '../../utils';
+import { ReadOnlyTextField } from '../../components/resultField';
 
 function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
   const Field = React.useRef(null as HTMLSpanElement | null);
@@ -44,16 +31,6 @@ function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<Rea
       props.setText('');
     }}>Clear</Button>
   </span>
-}
-
-async function safeSelect(event: { target: any, preventDefault: () => void }) {
-  event.preventDefault();
-  if (event.target.value !== '') {
-    try {
-      event.target.select();
-    }
-    catch (ignored) { }
-  }
 }
 
 // Every module needs an About(props) function that returns a per-module about page
@@ -318,7 +295,11 @@ def generate_alpha_sequence(input):
 }
 
 const Cipher = (props: { state: appState }) => {
-  const { factor, content, result, loading, resLabel, classes, sendInput } = props.state;
+  const { loading, classes, sendInput } = props.state;
+  const resLabel = useStateObj('Result');
+  const factor = useStateObj('');
+  const content = useStateObj('');
+  const result = useStateObj('');
   const [randomPattern, setRandomPattern] = useState(false);
   const history = useHistory();
 
@@ -359,7 +340,7 @@ const Cipher = (props: { state: appState }) => {
     <Complete />
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
     <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
-    <AdvancedOptions>
+    <AdvancedOptions keepMounted>
       <FormControlLabel
         control={
           <Checkbox value={randomPattern} onChange={event => { setRandomPattern(!randomPattern); }} />

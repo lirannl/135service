@@ -17,8 +17,7 @@ export const pyInterface = async function (ctx: RouterContext) {
   await proc.stdin?.write(new TextEncoder().encode(JSON.stringify(body.args)));
   await proc.stdin?.close();
   // Define a buffer for error output
-  let rawErr: Uint8Array;
-  rawErr = new Uint8Array(1000);
+  const rawErr = new Uint8Array(1000);
   const code = await proc.status();
   // Read error output into the given buffer
   const outLength = await proc.stderr?.read(rawErr);
