@@ -4,8 +4,8 @@ import { stateObj } from "../utils";
 
 const useStyles = makeStyles({
     form: { display: 'contents' },
-    charInput: { textAlign: "center", width: '2ch' },
-    charField: { width: '1ch', display: "table-cell" }
+    charInput: { textAlign: 'center', width: '2ch' },
+    charField: { width: '1ch', borderInline: 'solid 1px #afafaf', display: 'table-cell' },
 })
 
 export const TabularStringInput = (props:

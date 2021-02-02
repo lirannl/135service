@@ -14,6 +14,12 @@ registerApiRoutes("/api", topLevel);
 
 app
     .use(oakCors())
+    .use(async (ctx, next) => {
+        const start = Date.now();
+        await next();
+        console.log(`Received request addressed to ${ctx.request.url
+            }, responded (${ctx.response.status}) in ${Date.now() - start}ms`);
+    })
     .use(topLevel.routes())
     .use(topLevel.allowedMethods())
     .use(async ctx => {
@@ -29,5 +35,6 @@ if (CERTPATH || KEYPATH) await app.listen({
     certFile: CERTPATH,
     keyFile: KEYPATH
 });
+
 // If no certificates are specified, don't use https
 else await app.listen(`${HOST}:${PORT}`);

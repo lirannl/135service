@@ -149,6 +149,7 @@ p {
 }
 
 .scrollableTableHeader {
+  border-right: solid #bdffffff 2px;
   z-index: 1;
   background-color: #282c34;
   position: sticky;

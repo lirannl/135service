@@ -31,7 +31,6 @@ export const pyInterface = async function (ctx: RouterContext) {
   }
   else {
     ctx.response.status = 400;
-    console.log(new TextDecoder().decode(rawErr.subarray(0, outLength!-1)));
     ctx.response.body = {message: new TextDecoder().decode(rawErr.subarray(0, outLength!-1))};
   }
 }

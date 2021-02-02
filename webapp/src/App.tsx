@@ -16,11 +16,12 @@ async function sendInput(func: string, algorithm: string,
   try {
     const res = await query(algorithm, func, args);
     setLoading(false);
-    result.set(res.result);
+    if (res.response.ok) result.value = res.result;
+    else result.value = `Failed:${res.result.split(':')[1]}`;
     return res as { response: Response, result: any };
   }
   catch (e) {
-    result.set("Failed");
+    result.set("Failed to contact API.");
     setLoading(false);
     return;
   }
@@ -78,7 +79,7 @@ function App() {
           <span style={{ float: "left" }}> <Link to="/disclaimer">Use At Own Risk</Link></span>
           <span style={{ float: "right" }}> <Link to="/privacy">Privacy Policy</Link></span>
         </div>
-        <div className="credits">Made by Jordan Amalfitano and Liran Piade, 2021</div>
+        <div className="credits">Made by Jordan A. and Liran P., 2021</div>
       </header>
     </ThemeProvider></BrowserRouter>
   );

@@ -129,6 +129,7 @@ export const NavCreator = (props: { funcNames: any }): JSX.Element & { props: { 
     menu: <Menu
       keepMounted
       anchorEl={anchor.current}
+      onClose={()=>{menuOpen.value = false;}}
       open={menuOpen.value}
     >
       {props.funcNames.unloaded ? [] : (props.funcNames as { func: string, category: string }[])

@@ -23,7 +23,7 @@ const tools = [
     {
         name: "BaseTool", description: <p>
             BaseTool can be used to convert integer or float numbers between bases 2 to 86 with added support for custom input and output character sets.
-        </p>, status: "WIP"
+        </p>, status: "Beta"
     },
     {
         name: "CountTool", description: <p>
@@ -58,7 +58,7 @@ export const Home = (props: {state: appState}) =>
         </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>
-        <p>This website has been created independently by Jordan Amalfitano and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
+        <p>This website has been created independently by Jordan A. and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
         <table className="outlineTable"><tbody>
             <tr><td className="smallMargins">
                 <p>Jordan is a business student who specialises in management but also has recreational interests in both engineering and data manipulation. Jordan has developed all algorithms for this site.</p>

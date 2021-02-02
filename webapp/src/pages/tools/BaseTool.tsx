@@ -12,20 +12,16 @@ import { stateObj, useStateObj } from '../../utils';
 import { TabularStringInput } from '../../components/tabularStringInput';
 import { ReadOnlyTextField } from '../../components/resultField';
 
-const NumBaseSlider = (props: { value: stateObj<number>, readonly max: number, readonly label: string }) => <div style={{ display: 'inline-flex' }}>
-  <Typography style={{ paddingInline: '2ch' }}>{props.label}</Typography><Slider
-    style={{ width: '15vw' }}
-    valueLabelDisplay='on' defaultValue={10}
-    step={1} min={2} max={props.max} onChangeCommitted={(_, value) => {
-      props.value.value = value as number;
-    }} />
-</div>
-
 function InputField(props: { value: stateObj<string>, inBase: stateObj<number>, outBase: stateObj<number> }) {
-  return <div>
-    <NumBaseSlider max={86} value={props.inBase} label="Input base" />
-    <NumBaseSlider max={86} value={props.outBase} label="Output base" />
-    <br /><TextField
+  return <div style={{ display: 'inline-block' }}>
+    <TextField style={{ width: '8ch' }}
+      type="number" label="Input Base"
+      value={`${props.inBase.value}`} onChange={(event) => { props.inBase.value = parseInt(event.target.value) }} />
+    <TextField style={{ width: '8ch' }}
+      type="number" label="Output Base"
+      value={`${props.outBase.value}`} onChange={(event) => { props.outBase.value = parseInt(event.target.value) }} />
+    <br />
+    <TextField
       label="Number to convert"
       value={props.value.value}
       onChange={(event) => {
@@ -36,14 +32,6 @@ function InputField(props: { value: stateObj<string>, inBase: stateObj<number>, 
       props.value.value = '';
     }}>Clear</Button>
   </div>
-}
-
-// Every module needs an About(props) function that returns a per-module about page
-export function About() {
-  return (
-    <div className="pageContent about">
-    </div>
-  );
 }
 
 const defaultCharSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/~!@#$%^&*;=?<>[]:"{},`';
@@ -65,7 +53,7 @@ const BaseTool = (props: { state: appState }) => {
   const numberStr = useStateObj('');
   const history = useHistory();
   const inBase = useStateObj(10);
-  const outBase = useStateObj(10);
+  const outBase = useStateObj(16);
   const inputSet = useStateObj(defaultCharSet);
   const outputSet = useStateObj(defaultCharSet);
   const accuracy = useStateObj('');
@@ -73,14 +61,14 @@ const BaseTool = (props: { state: appState }) => {
   return <div className="pageContent">
 
     <h1 style={{ marginBottom: '-15pt' }}>BaseTool</h1>
-    <p className="smallText">Number base conversion tool</p>
+    <p className="smallText">Number Base Conversion Tool</p>
     <Button variant="outlined" color="secondary" onClick={() => history.push(`/basetool/about`)} style={{ marginBottom: "20pt" }}>About</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={async (event) => {
       event.preventDefault();
       const reqArgs = {
         inputString: numberStr.value,
         inBase: inBase.value,
-        outBase: outBase.value,
+        outBase: outBase.value || undefined,
         inputSet: inputSet.value || undefined,
         outputSet: outputSet.value || undefined,
         fracPlaces: accuracy.value || undefined
@@ -91,9 +79,6 @@ const BaseTool = (props: { state: appState }) => {
       const res = await sendInput("convert", "basetool", result, loading.set, () => { }, reqArgs);
       if (res?.result === "" && res.response.ok) {
         result.value = "0";
-      }
-      else if (!res?.response.ok) {
-        result.value = "Base conversion failed.";
       }
     }}>
       <div>
@@ -107,10 +92,10 @@ const BaseTool = (props: { state: appState }) => {
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel="Converted number" /><br />
     <CircularProgress color="primary" className={loading.value ? undefined : "hidden"} />
     <AdvancedOptions>
-      <div style={{ display: 'inline-flex' }}>
-        <Typography style={{ paddingInlineEnd: '2ch' }}>Fractional Places</Typography><Slider
+      <div style={{ display: 'inline-flex', paddingBottom: '12pt' }}>
+        <Typography style={{ paddingInlineEnd: '2ch' }}>Fractional Places: {accuracy.value}</Typography><Slider
           style={{ width: '20vw' }}
-          valueLabelDisplay='on' defaultValue={5}
+          valueLabelDisplay='auto' defaultValue={5}
           step={1} min={0} max={7} onChangeCommitted={(_, value) => {
             accuracy.value = `${value}`;
           }} />
@@ -118,14 +103,14 @@ const BaseTool = (props: { state: appState }) => {
       <div className="flexBox">
         <div className="scrollableTable">
           <div style={{ display: 'table-row' }}>
-            <TableHeaderCell />
+            <TableHeaderCell>Value</TableHeaderCell>
             {Array.from(Array(86).keys()).map(i => <Typography key={i}
-              style={{ display: 'table-cell', paddingInline: '1pt' }}>
+              style={{ display: 'table-cell', paddingInline: '1pt', borderInline: 'solid 1px #afafaf' }}>
               {i}
             </Typography>)}
           </div>
-          <Row label="Input Characterset" value={inputSet} />
-          <Row label="Output Characterset" value={outputSet} />
+          <Row label="Input Set" value={inputSet} />
+          <Row label="Output Set" value={outputSet} />
         </div>
       </div>
     </AdvancedOptions>

@@ -9,9 +9,6 @@ const requester = async (algorithm: string, mode: string, args: Object) => {
         body: JSON.stringify({ operation: mode, args })
     });
     const resBody = await response.json();
-    if (response.status !== 200) return {
-        response
-    };
     return { result: resBody.message, response };
 };
 
