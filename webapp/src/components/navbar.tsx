@@ -78,7 +78,7 @@ function NavBar(props: {
     const categoryToSelect = loadedFuncCategories.find(elem => elem.func === currentPath)?.category || defaultCategory || '';
     const barElems = getVisibleElements({ main: children.main, items: children.items }, categoryToSelect);
     categorySetter(categoryToSelect);
-    selectedTab.set(barElems.findIndex(e => e.key === currentPath));
+    selectedTab.value = barElems.findIndex(e => e.key === currentPath);
   }
   useEffect(() => adjustCategory(),
     // eslint-disable-next-line
@@ -129,7 +129,7 @@ export const NavCreator = (props: { funcNames: any }): JSX.Element & { props: { 
     menu: <Menu
       keepMounted
       anchorEl={anchor.current}
-      onClose={()=>{menuOpen.value = false;}}
+      onClose={() => { menuOpen.value = false; }}
       open={menuOpen.value}
     >
       {props.funcNames.unloaded ? [] : (props.funcNames as { func: string, category: string }[])
