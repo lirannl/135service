@@ -15,8 +15,11 @@ const executeUpdate = (body: GithubWebhook) => {
             modified: updated('modified')
         }
     }, { added: [], removed: [], modified: [] });
+    const involvedFiles = ([] as string[]).concat(...Object.values(summary));
     const updaterArgs = [
         body.repository.clone_url != Deno.env.get('own_repo') ? injectPat(body.repository.clone_url) : null,
+        involvedFiles.some(filePath => filePath.split('/')[0] == "API") ? "api" : null,
+        involvedFiles.some(filePath => filePath.split('/')[0] == "webapp") ? "frontend" : null
     ].filter(e => e !== null) as string[]; // Remove nulls
     Deno.run({ cmd: [Deno.env.get("updater_path")!, ...updaterArgs, '&', "disown"] });
 }
