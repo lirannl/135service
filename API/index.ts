@@ -2,8 +2,6 @@ import { Application, Router, send } from "https://deno.land/x/oak@v6.3.1/mod.ts
 import { oakCors } from "https://deno.land/x/cors@v1.2.1/mod.ts";
 import { apiRouter } from "./routes.ts";
 const env = Deno.env.toObject();
-const CERTPATH = env.CERTPATH;
-const KEYPATH = env.KEYPATH;
 const HOST = env.HOST || '0.0.0.0';
 const PORT = parseInt(env.API_PORT) || 7700;
 
@@ -25,13 +23,4 @@ app
         });
     });
 
-console.log(`Listening on ${HOST}:${PORT}`);
-if (CERTPATH || KEYPATH) await app.listen({
-    port: PORT,
-    secure: true,
-    certFile: CERTPATH,
-    keyFile: KEYPATH
-});
-
-// If no certificates are specified, don't use https
-else await app.listen(`${HOST}:${PORT}`);
+await app.listen(`${HOST}:${PORT}`);
