@@ -4,10 +4,10 @@ import { pyInterface } from './routes/interface.ts';
 import { update } from "./routes/update.ts";
 
 
-export const registerApiRoutes = (subroute: string, router: Router) => {
-    router.post(`${subroute}/:algorithm`, pyInterface);
-    router.get(`${subroute}/funcs`, async ctx => {
-        await getFuncs(ctx)
-    });
-    router.get(`${subroute}/update`, update);
-}
+export const apiRouter = new Router({ prefix: '/api' });
+
+apiRouter
+    .post('/update', update)
+    .get('/funcs', getFuncs)
+    .post('/:algorithm', pyInterface)
+    .use('/', ctx => { ctx.response.status = 404; ctx.response.body = { message: "No such API route." } });
