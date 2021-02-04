@@ -7,7 +7,14 @@ const injectPat = (url: string): string =>
 
 const executeUpdate = (body: GithubWebhook) => {
     const deltas = body.commits.map(({ added, removed, modified }) => ({ added, removed, modified }));
-    const test = Object.entries(deltas[0]).map(([key, value]) => ({[key]: value}));
+    const summary = deltas.reduce((acc, curr) => {
+        const updated = (prop: keyof typeof deltas[0]) => acc[prop].concat(curr[prop]);
+        return {
+            added: updated('added'),
+            removed: updated('removed'),
+            modified: updated('modified')
+        }
+    }, { added: [], removed: [], modified: [] });
     const updaterArgs = [
         body.repository.clone_url != Deno.env.get('own_repo') ? injectPat(body.repository.clone_url) : null,
     ].filter(e => e !== null) as string[]; // Remove nulls
