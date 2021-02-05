@@ -23,4 +23,5 @@ app
         });
     });
 
+console.log(`Now listening for traffic on ${PORT}`);
 await app.listen(`${HOST}:${PORT}`);
