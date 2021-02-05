@@ -1,2 +1,0 @@
-export $(grep -v '^#' .env | xargs)
-deno run -A /home/135code/service/API/index.ts

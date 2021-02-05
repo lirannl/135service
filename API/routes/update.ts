@@ -2,8 +2,10 @@ import { RouterContext } from "https://deno.land/x/oak@v6.3.1/router.ts";
 import { hmac } from "https://deno.land/x/hmac@v2.0.1/mod.ts";
 import { GithubWebhook } from "../webhook.ts";
 
-const injectPat = (url: string): string =>
-    `${/https?:\/\//.exec(url)}lirannl:${Deno.env.get("github_pat_path")}@${/github\.com.*/.exec(url)}`;
+const injectPat = (url: string): string => {
+    const pat = Deno.readTextFileSync(Deno.env.get("github_pat_path")!);
+    return `${/https?:\/\//.exec(url)}lirannl:${pat.trimEnd()}@${/github\.com.*/.exec(url)}`;
+}
 
 const executeUpdate = (body: GithubWebhook) => {
     const deltas = body.commits.map(({ added, removed, modified }) => ({ added, removed, modified }));
