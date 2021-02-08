@@ -25,13 +25,7 @@ const executeUpdate = (body: GithubWebhook) => {
         involvedFiles.some(filePath => filePath.split('/')[0] == "API") ? "api" : null,
         involvedFiles.some(filePath => filePath.split('/')[0] == "webapp") ? "frontend" : null
     ].filter(e => e !== null) as string[]; // Remove nulls
-    const proc = spawn(process.env.updater_path!, updaterArgs, { detached: true, stdio: "pipe" });
-    proc.stdout.on("data", (out) => {
-        console.log(`Updating... ${out}`);
-    });
-    proc.stderr.on("data", (out) => {
-        console.log(`Updating... ${out}`);
-    });
+    spawn(process.env.updater_path!, updaterArgs, { detached: true, stdio: "inherit" });;
 }
 
 export const update = async (ctx: RouterContext & { request: { body: any } }) => {
