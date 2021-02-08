@@ -22,6 +22,7 @@ const executeUpdate = (body: GithubWebhook) => {
     const involvedFiles = ([] as string[]).concat(...Object.values(summary));
     const updaterArgs = [
         body.repository.clone_url != process.env.own_repo ? injectPat(body.repository.clone_url) : null,
+        involvedFiles.some(filePath => filePath.split('/').slice(-1)[0] == "package.json") ? "npm" : null,
         involvedFiles.some(filePath => filePath.split('/')[0] == "node_API") ? "api" : null,
         involvedFiles.some(filePath => filePath.split('/')[0] == "webapp") ? "frontend" : null
     ].filter(e => e !== null) as string[]; // Remove nulls
