@@ -1,0 +1,30 @@
+{
+  "name": "135service_api",
+  "version": "1.0.0",
+  "description": "135code.com's API",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lirannl/135service.git"
+  },
+  "author": "Liran Piade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lirannl/135service/issues"
+  },
+  "homepage": "https://github.com/lirannl/135service#readme",
+  "dependencies": {
+    "@types/koa": "^2.11.7",
+    "@types/koa-router": "^7.4.1",
+    "@types/koa-static-server": "^1.3.0",
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.0.0",
+    "koa-static-server": "^1.5.2",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.3"
+  }
+}

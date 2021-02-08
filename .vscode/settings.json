@@ -1,5 +1,5 @@
 {
-    "deno.enable": true,
+    "deno.enable": false,
     "debug.javascript.unmapMissingSources": true,
     "deno.lint": true,
     "deno.unstable": true

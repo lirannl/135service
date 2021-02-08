@@ -1,2 +1,3 @@
 .env
 webapp/.eslintcache
+node_API/node_modules

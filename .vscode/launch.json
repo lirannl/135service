@@ -1,6 +1,25 @@
 {
     "configurations": [
         {
+            "console": "internalConsole",
+            "internalConsoleOptions": "neverOpen",
+            "outputCapture": "std",
+            "name": "Run API",
+            "program": "${workspaceFolder}/node_API/index.ts",
+            "cwd": "${workspaceFolder}/node_API",
+            "request": "launch",
+            "restart": true,
+            "runtimeExecutable": "npx",
+            "envFile": "${workspaceFolder}/.env",
+            "runtimeArgs": [
+                "ts-node-dev"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "type": "pwa-node",
             "request": "launch",
             "name": "Launch Deno",
@@ -16,6 +35,5 @@
             ],
             "attachSimplePort": 9229
         }
-        
     ]
 }
