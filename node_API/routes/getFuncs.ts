@@ -28,7 +28,7 @@ const subFolderReader = async (funcsPromise: Promise<func[]>, subFolder: string)
         }
         catch {
             return {
-                category: "Unknown",
+                category: "unknown",
                 func: file
             }
         }

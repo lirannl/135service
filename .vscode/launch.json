@@ -1,19 +1,16 @@
 {
     "configurations": [
         {
-            "console": "internalConsole",
-            "internalConsoleOptions": "neverOpen",
-            "outputCapture": "std",
-            "name": "Run API",
+            "name": "Launch Program",
             "program": "${workspaceFolder}/node_API/index.ts",
             "cwd": "${workspaceFolder}/node_API",
-            "request": "launch",
-            "restart": true,
-            "runtimeExecutable": "npx",
             "envFile": "${workspaceFolder}/.env",
+            "outputCapture": "std",
+            "runtimeExecutable": "npx",
             "runtimeArgs": [
                 "ts-node-dev"
             ],
+            "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
             ],
