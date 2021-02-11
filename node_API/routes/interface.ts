@@ -8,8 +8,13 @@ export const pyInterface = async (ctx: RouterContext & { request: { body: any, p
         return;
     };
     const args = ctx.request.body.args;
-    const { code, output } = await run([ctx.request.body.operation, ctx.request.params.algorithm], args);
-    if (code == 0) ctx.response.status = 200;
-    else ctx.response.status = 400;
-    ctx.response.body = {message: output};
+    try {
+        const { code, output } = await run([ctx.request.body.operation, ctx.request.params.algorithm], args);
+        if (code == 0) ctx.response.status = 200;
+        else ctx.response.status = 400;
+        ctx.response.body = { message: output };
+    }
+    catch {
+        ctx.response.status = 500;
+    }
 }

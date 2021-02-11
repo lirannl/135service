@@ -19,10 +19,18 @@ const subFolderReader = async (funcsPromise: Promise<func[]>, subFolder: string)
         .map(entry => entry.split('.')[0])
     ];
     const subfolderFuncs = await Promise.all(files.map(async file => {
-        const {output} = await run(["categorise", file]);
-        return {
-            category: output,
-            func: file
+        try {
+            const { output } = await run(["categorise", file]);
+            return {
+                category: output,
+                func: file
+            }
+        }
+        catch {
+            return {
+                category: "Unknown",
+                func: file
+            }
         }
     }));
     return (await funcsPromise).concat(subfolderFuncs);
