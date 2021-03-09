@@ -34,7 +34,6 @@ const tools = [
 
 export const Home = (props: {state: appState}) =>
     <div className="pageContent about">
-        
         <h1>135Code</h1>
         <p>This website is home to a growing range of different algorithms focused on manipulating data in different and new ways. It must be noted that nothing on this website has been tested extensively and should not be relied upon for any reason. This having been said, we will try to keep completed algorithms working in a stable and reliable manner where possible. </p>
 

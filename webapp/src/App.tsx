@@ -79,7 +79,7 @@ function App() {
           <span style={{ float: "left" }}> <Link to="/disclaimer">Use At Own Risk</Link></span>
           <span style={{ float: "right" }}> <Link to="/privacy">Privacy Policy</Link></span>
         </div>
-        <div className="credits">Made by Jordan A. and Liran P. - 2021</div>
+        <div className="credits">Made by Jordan A. and Liran P., 2021</div>
       </header>
     </ThemeProvider></BrowserRouter>
   );
