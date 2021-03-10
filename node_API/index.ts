@@ -16,7 +16,7 @@ Application
     .use(koaBody())
     .use(router.routes())
     .use(router.allowedMethods())
-    .use(serve({ rootDir: '../res', notFoundFile: 'index.html' }));
+    .use(serve({ rootDir: '../webapp/build', notFoundFile: 'index.html' }));
 
 console.log(`API now listening to traffic on port ${port}.`);
 Application.listen({ port });
