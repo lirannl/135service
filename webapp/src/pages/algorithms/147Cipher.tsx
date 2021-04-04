@@ -36,14 +36,12 @@ const Cipher = (props: { state: appState }) => {
   const factor = useStateObj('');
   const content = useStateObj('');
   const result = useStateObj('');
-  const [randomPattern, setRandomPattern] = useState(false);
   const history = useHistory();
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, resLabel.set, {
       text: content.value,
-      factor: factor.value,
-      argument: randomPattern ? "+" : undefined,
+      factor: factor.value
     });
     if (res?.response.ok)
       result.set(res?.result!);
@@ -60,11 +58,8 @@ const Cipher = (props: { state: appState }) => {
       event.preventDefault();
     }}>
       <div>
-        <TextField id="keyField" label="key" inputMode="numeric" value={factor.value} onChange={(event) => {
-          if (event.target.value.length > 256) alert("Key must be up to 256 characters long.");
-          else if (RegExp("^\\d*$").test(event.target.value))
-            factor.set(event.target.value);
-          else alert("You can only input a whole number as the key.");
+        <TextField id="keyField" label="key" value={factor.value} onChange={(event) => {
+          if (event.target.value.length > 256) alert("Key must be up to 256 characters long.")
         }} />
         <FieldWithPasteButton text={content.value} setText={content.set} />
       </div>
