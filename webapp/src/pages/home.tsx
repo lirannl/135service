@@ -9,8 +9,8 @@ const algorithms = [
     },
     {
         name: "147Cipher", description: <p>
-            147Cipher is a more advanced symmetric encryption algorithm that is currently in the early stages of development. The goal is to build upon 135Cipher.
-        </p>, status: "WIP"
+            147Cipher is a substitution based symmetric encryption algorithm that builds upon 135Cipher and incorporates time of encryption to further differentiate encrypted results.
+        </p>, status: "Beta"
     },
     {
         name: "432Compress", description: <p>
