@@ -9,7 +9,7 @@ const requester = async (algorithm: string, mode: string, args: Object) => {
         body: JSON.stringify({ operation: mode, args })
     });
     const resBody = await response.json();
-    return { result: resBody.message, response };
+    return { result: JSON.parse(resBody.message), response };
 };
 
 export default requester;
