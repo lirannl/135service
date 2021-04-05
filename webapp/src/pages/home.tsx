@@ -22,13 +22,13 @@ const algorithms = [
 const tools = [
     {
         name: "BaseTool", description: <p>
-            BaseTool can be used to convert integer or float numbers between bases 2 to 86 with added support for custom input and output character sets.
+            BaseTool is a number base conversion tool that can be used to convert integer or float numbers between bases 2 to 86 with added support for custom character sets.
         </p>, status: "Beta"
     },
     {
         name: "CountTool", description: <p>
-            CountTool can be used to count and visually present the number of occurences of different characters within a provided input string.
-        </p>, status: "WIP"
+            CountTool is a character frequency analysis tool that can be used to count and visually display the number of occurences of different characters within a text input.
+        </p>, status: "Beta"
     }
 ]
 
@@ -58,7 +58,7 @@ export const Home = (props: {state: appState}) =>
         </tr>)}</tbody></table>
 
         <h2>About The Creators</h2>
-        <p>This website has been created independently by Jordan A. and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
+        <p>This website has been created independently by Jordan Amalfitano and Liran Piade out of recreational interest. You can learn a little bit more about each of us just below.</p>
         <table className="outlineTable"><tbody>
             <tr><td className="smallMargins">
                 <p>Jordan is a business student who specialises in management but also has recreational interests in both engineering and data manipulation. Jordan has developed all algorithms for this site. <a href="https://www.linkedin.com/in/jordanamalfitano/">Link</a></p>
