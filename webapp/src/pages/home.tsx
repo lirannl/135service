@@ -27,7 +27,7 @@ const tools = [
     },
     {
         name: "CountTool", description: <p>
-            CountTool is a character frequency analysis tool that can be used to count and visually present the number of occurences of different characters within a text input.
+            CountTool is a character frequency analysis tool that can be used to count and visually display the number of occurences of different characters within a text input.
         </p>, status: "Beta"
     }
 ]
