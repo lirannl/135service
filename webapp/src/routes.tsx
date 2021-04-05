@@ -12,6 +12,7 @@ const alternativeNames = {
   "147cipher": "147Cipher",
   "432compress": "432Compress",
   "basetool": "BaseTool",
+  "counttool": "CountTool"
 } as { [module: string]: string };
 
 function getModule(mod: string, category: string, overrideUnimplementedName?: string): { default: () => JSX.Element } { // Safely get modules based on the API's declared functions
