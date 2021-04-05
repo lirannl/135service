@@ -14,7 +14,7 @@ import { ReadOnlyTextField } from '../../components/resultField';
 
 const CountTool = (props: { state: appState }) => {
   const { loading, classes, sendInput } = props.state;
-  const result = useStateObj('');
+  const result = useStateObj([] as [string, number, number][]);
   const inputString = useStateObj('');
   const excludeSpaces = useStateObj(true);
   const caseSensitive = useStateObj(true);
@@ -42,7 +42,7 @@ const CountTool = (props: { state: appState }) => {
       </ButtonGroup>
     </form>
     <BetaTag />
-    <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel="Frequency output" /><br />
+    <ReadOnlyTextField result={loading.value ? "Loading..." : JSON.stringify(result.value) || ''} resLabel="Frequency output" /><br />
     <CircularProgress color="primary" className={loading.value ? undefined : "hidden"} />
     <AdvancedOptions keepMounted>
     <FormControlLabel
