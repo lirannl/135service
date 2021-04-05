@@ -4,6 +4,8 @@ import {
   Button, ButtonGroup, TextField,
   CircularProgress, Checkbox, FormControlLabel
 } from '@material-ui/core';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import elemStyle from 'react-syntax-highlighter/dist/esm/styles/hljs/vs2015';
 import { useHistory } from 'react-router-dom';
 import { BetaTag } from '../../components/beta';;
 import { appState } from '../../App';
@@ -54,14 +56,14 @@ const Cipher = (props: { state: appState }) => {
 
     <h1 style={{ marginBottom: '-15pt' }}>147Cipher</h1>
     <p className="smallText">Symmetric Encryption Algorithm</p>
-    <Button variant="outlined" color="secondary" onClick={() => history.push(`/147cipher/about`)} style={{ marginBottom: "20pt" }}>About</Button>
+    <Button variant="outlined" color="secondary" onClick={() => history.push(`/135cipher/about`)} style={{ marginBottom: "20pt" }}>About</Button>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
       send('encrypt');
       event.preventDefault();
     }}>
       <div>
         <TextField id="keyField" label="key" inputMode="numeric" value={factor.value} onChange={(event) => {
-          if (event.target.value.length > 256) alert("Key must be up to 256 characters long.");
+          if (event.target.value.length > 256) alert("Key must be up to 135 characters long.");
           else if (RegExp("^\\d*$").test(event.target.value))
             factor.set(event.target.value);
           else alert("You can only input a whole number as the key.");
