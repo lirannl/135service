@@ -9,7 +9,7 @@ import { getFuncs } from './requests/getFuncs';
 import { BrowserRouter, Link } from 'react-router-dom';
 
 async function sendInput(func: string, algorithm: string,
-  result: stateObj<string>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  result: stateObj<any>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setResLabel: React.Dispatch<React.SetStateAction<string>>, args: Object) {
   setLoading(true);
   setResLabel(`${capitalise(func)}ed result`);
@@ -49,7 +49,7 @@ export interface appState {
   funcs: stateObj<{ unloaded: true } | { func: string, category: string }[]>;
   loading: stateObj<boolean>
   sendInput: (mode: string, algorithm: string,
-    result: stateObj<string>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    result: stateObj<any>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
     setResLabel: React.Dispatch<React.SetStateAction<string>>, args: Object) =>
     Promise<{ result: string | undefined, response: Response } | undefined>;
 }
