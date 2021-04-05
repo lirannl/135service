@@ -8,6 +8,7 @@ import { BetaTag } from '../../components/beta';
 import { appState } from '../../App';
 import { capitalise, useStateObj } from '../../utils';
 import { ReadOnlyTextField } from '../../components/resultField';
+import AdvancedOptionsCard from '../../components/advanced_options';
 
 function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
   const Field = React.useRef(null as HTMLSpanElement | null);
@@ -35,12 +36,14 @@ const Cipher = (props: { state: appState }) => {
   const factor = useStateObj('');
   const content = useStateObj('');
   const result = useStateObj('');
+  const time = useStateObj(NaN);
   const history = useHistory();
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, resLabel.set, {
       inText: content.value,
-      key: factor.value
+      key: factor.value,
+      ...isNaN(time.value) ? {} : { inTime: time.value }
     });
     if (res?.response.ok)
       result.set(res?.result!);
@@ -57,7 +60,7 @@ const Cipher = (props: { state: appState }) => {
       event.preventDefault();
     }}>
       <div>
-        <TextField id="keyField" label="key" inputMode="numeric" value={factor.value} onChange={(event) => {
+        <TextField id="keyField" label="key" value={factor.value} onChange={(event) => {
           if (event.target.value.length > 256) alert("Key must be up to 256 characters long.");
           else
             factor.set(event.target.value);
@@ -72,6 +75,14 @@ const Cipher = (props: { state: appState }) => {
     <BetaTag />
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
     <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
+    <AdvancedOptionsCard keepMounted>
+      <TextField id="timeField" label="custom time" inputMode="numeric" value={`${isNaN(time.value) ? `` : time.value}`}
+        onChange={event => {
+          if (/^\d*$/.test(event.target.value))
+            time.value = parseInt(event.target.value);
+          else alert("You must input a whole number as the time.")
+        }} />
+    </AdvancedOptionsCard>
   </div>;
 }
 
