@@ -318,7 +318,10 @@ const Cipher = (props: { state: appState }) => {
 
     <h1 style={{ marginBottom: '-15pt' }}>135Cipher</h1>
     <p className="smallText">Symmetric Encryption Algorithm</p>
-    <Button variant="outlined" color="secondary" onClick={() => history.push(`/135cipher/about`)} style={{ marginBottom: "20pt" }}>About</Button>
+    <ButtonGroup variant="outlined" color="secondary" aria-label="contained primary button group" style={{ marginBottom: "20pt" }}>
+      <Button onClick={() => history.push(`/135cipher/about`)}><span style={{marginInlineStart:"0.5ch", marginInlineEnd: "0.5ch"}}>About</span></Button>
+      <Button onClick={() => window.open('https://github.com/lirannl/135code/blob/master/bin/functions/135cipher.py')}>Source</Button>
+    </ButtonGroup>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
       send('encrypt');
       event.preventDefault();
