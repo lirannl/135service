@@ -9,6 +9,7 @@ import { appState } from '../../App';
 import { capitalise, useStateObj } from '../../utils';
 import { ReadOnlyTextField } from '../../components/resultField';
 import AdvancedOptionsCard from '../../components/advanced_options';
+import { sendInput } from '../../requests/requester';
 
 function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
   const Field = React.useRef(null as HTMLSpanElement | null);
@@ -31,7 +32,7 @@ function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<Rea
 }
 
 const Cipher = (props: { state: appState }) => {
-  const { loading, classes, sendInput } = props.state;
+  const { loading, classes } = props.state;
   const resLabel = useStateObj('Result');
   const factor = useStateObj('');
   const content = useStateObj('');
@@ -40,13 +41,14 @@ const Cipher = (props: { state: appState }) => {
   const history = useHistory();
 
   const send = async (action: string) => {
-    const res = await sendInput(action, "147cipher", result, loading.set, resLabel.set, {
+    const res = await sendInput(action, "147cipher", result, loading.set, {
       inText: content.value,
       key: factor.value,
       ...isNaN(time.value) ? {} : { inTime: time.value }
     });
+    resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
-      result.set(res?.result!);
+      result.value = res?.result!;
     else result.set(`${capitalise(action)}ion failed.`);
   };
 

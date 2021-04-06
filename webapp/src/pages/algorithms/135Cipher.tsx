@@ -12,6 +12,7 @@ import { Complete } from '../../components/complete';
 import { appState } from '../../App';
 import { capitalise, useStateObj } from '../../utils';
 import { ReadOnlyTextField } from '../../components/resultField';
+import { sendInput } from '../../requests/requester';
 
 function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
   const Field = React.useRef(null as HTMLSpanElement | null);
@@ -295,7 +296,7 @@ def generate_alpha_sequence(input):
 }
 
 const Cipher = (props: { state: appState }) => {
-  const { loading, classes, sendInput } = props.state;
+  const { loading, classes } = props.state;
   const resLabel = useStateObj('Result');
   const factor = useStateObj('');
   const content = useStateObj('');
@@ -304,11 +305,12 @@ const Cipher = (props: { state: appState }) => {
   const history = useHistory();
 
   const send = async (action: string) => {
-    const res = await sendInput(action, "135cipher", result, loading.set, resLabel.set, {
+    const res = await sendInput(action, "135cipher", result, loading.set, {
       text: content.value,
       factor: factor.value,
       argument: randomPattern ? "+" : undefined,
     });
+    resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
       result.set(res?.result!);
     else result.set(`${capitalise(action)}ion failed.`);
@@ -336,8 +338,8 @@ const Cipher = (props: { state: appState }) => {
         <FieldWithPasteButton text={content.value} setText={content.set} />
       </div>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <Button onClick={event => send('encrypt')}>Encrypt</Button>
-        <Button onClick={event => send('decrypt')}>Decrypt</Button>
+        <Button onClick={_ => send('encrypt')}>Encrypt</Button>
+        <Button onClick={_ => send('decrypt')}>Decrypt</Button>
       </ButtonGroup>
     </form>
     <Complete />

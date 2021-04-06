@@ -1,32 +1,11 @@
 import React, { useEffect } from 'react';
-import query from './requests/requester';
 import './App.css';
-import { capitalise, stateObj, useStateObj } from './utils';
+import { stateObj, useStateObj } from './utils';
 import { NavCreator } from './components/navbar';
 import { Routes } from './routes';
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core';
 import { getFuncs } from './requests/getFuncs';
 import { BrowserRouter, Link } from 'react-router-dom';
-
-async function sendInput(func: string, algorithm: string,
-  result: stateObj<any>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setResLabel: React.Dispatch<React.SetStateAction<string>>, args: Object) {
-  setLoading(true);
-  setResLabel(`${capitalise(func)}ed result`);
-  try {
-    const res = await query(algorithm, func, args);
-    setLoading(false);
-    if (res.response.ok) result.value = res.result;
-    else result.value = `Failed:${res.result.split(':')[1]}`;
-    return res as { response: Response, result: any };
-  }
-  catch (e) {
-    result.set("Failed to contact API.");
-    setLoading(false);
-    return;
-  }
-
-}
 
 const theme = createMuiTheme({
   palette: {
@@ -48,18 +27,13 @@ export interface appState {
   classes: Record<"root", string>;
   funcs: stateObj<{ unloaded: true } | { func: string, category: string }[]>;
   loading: stateObj<boolean>
-  sendInput: (mode: string, algorithm: string,
-    result: stateObj<any>, setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    setResLabel: React.Dispatch<React.SetStateAction<string>>, args: Object) =>
-    Promise<{ result: string | undefined, response: Response } | undefined>;
 }
 
 function App() {
   const state: appState = {
     classes: useStyles(),
     funcs: useStateObj({ unloaded: true } as any),
-    loading: useStateObj(false as boolean),
-    sendInput
+    loading: useStateObj(false as boolean)
   }
 
   const setFuncs = state.funcs.set;

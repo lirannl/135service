@@ -11,6 +11,7 @@ import { BetaTag } from '../../components/beta';
 import { stateObj, useStateObj } from '../../utils';
 import { TabularStringInput } from '../../components/tabularStringInput';
 import { ReadOnlyTextField } from '../../components/resultField';
+import { sendInput } from '../../requests/requester';
 
 function InputField(props: { value: stateObj<string>, inBase: stateObj<number>, outBase: stateObj<number> }) {
   return <div style={{ display: 'inline-block' }}>
@@ -48,7 +49,7 @@ const Row = (props: { label: string, value: stateObj<string> }) => <div style={{
 </div>
 
 const BaseTool = (props: { state: appState }) => {
-  const { loading, classes, sendInput } = props.state;
+  const { loading, classes } = props.state;
   const result = useStateObj('');
   const numberStr = useStateObj('');
   const history = useHistory();
@@ -79,7 +80,7 @@ const BaseTool = (props: { state: appState }) => {
       if (Object.values(reqArgs).some(e => e === '')) {
         alert("The number and input base fields cannot be left empty."); return;
       }
-      const res = await sendInput("convert", "basetool", result, loading.set, () => { }, reqArgs);
+      const res = await sendInput("convert", "basetool", result, loading.set, reqArgs);
       if (res?.result === "" && res.response.ok) {
         result.value = "0";
       }
