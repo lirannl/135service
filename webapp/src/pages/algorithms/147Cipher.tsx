@@ -82,8 +82,9 @@ const Cipher = (props: { state: appState }) => {
       <TextField id="timeField" label="custom time" inputMode="numeric" value={`${isNaN(time.value) ? `` : time.value}`}
         onChange={event => {
           if (/^\d*$/.test(event.target.value))
-            time.value = parseInt(event.target.value);
-          else alert("You must input a whole number as the time.")
+            if (event.target.value.length > 80) alert("Time number must be up to 80 characters long.");
+            else time.value = parseInt(event.target.value);
+          else alert("You must input a whole number as the time.");
         }} />
     </AdvancedOptionsCard>
   </div>;
