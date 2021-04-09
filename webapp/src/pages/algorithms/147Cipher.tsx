@@ -37,14 +37,14 @@ const Cipher = (props: { state: appState }) => {
   const factor = useStateObj('');
   const content = useStateObj('');
   const result = useStateObj('');
-  const time = useStateObj(NaN);
+  const time = useStateObj('');
   const history = useHistory();
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, {
       inText: content.value,
       key: factor.value,
-      ...isNaN(time.value) ? {} : { inTime: time.value }
+      ...time.value ? { inTime: parseInt(time.value) } : {}
     });
     resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
@@ -81,11 +81,11 @@ const Cipher = (props: { state: appState }) => {
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
     <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
     <AdvancedOptionsCard keepMounted>
-      <TextField id="timeField" label="custom time" inputMode="numeric" value={`${isNaN(time.value) ? `` : time.value}`}
+      <TextField id="timeField" label="custom time" inputMode="numeric" value={time.value}
         onChange={event => {
           if (/^\d*$/.test(event.target.value))
             if (event.target.value.length > 80) alert("Time number must be up to 80 characters long.");
-            else time.value = parseInt(event.target.value);
+            else time.value = event.target.value;
           else alert("You must input a whole number as the time.");
         }} />
     </AdvancedOptionsCard>
