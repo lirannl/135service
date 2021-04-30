@@ -44,7 +44,7 @@ const Cipher = (props: { state: appState }) => {
     const res = await sendInput(action, "147cipher", result, loading.set, {
       in_text: content.value,
       key: factor.value,
-      ...time.value ? { inTime: parseInt(time.value) } : {}
+      ...time.value ? { in_time: parseInt(time.value) } : {}
     });
     resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
