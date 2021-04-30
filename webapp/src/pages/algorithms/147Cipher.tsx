@@ -42,7 +42,7 @@ const Cipher = (props: { state: appState }) => {
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, {
-      inText: content.value,
+      in_text: content.value,
       key: factor.value,
       ...time.value ? { inTime: parseInt(time.value) } : {}
     });
