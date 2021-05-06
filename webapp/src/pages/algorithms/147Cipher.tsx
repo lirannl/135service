@@ -94,6 +94,7 @@ const Cipher = (props: { state: appState }) => {
             else time.value = event.target.value;
           else alert("You must input a whole number as the time.");
         }} />
+      <br />
       <Select value={base} onChange={(event) => setBase(event.target.value as string)}>
         {baseOptions.map((option) => (<MenuItem key={option} value={option}>{option}</MenuItem>))}
       </Select>
