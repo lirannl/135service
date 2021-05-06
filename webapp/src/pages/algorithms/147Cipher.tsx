@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button, ButtonGroup, TextField,
-  CircularProgress
+  CircularProgress,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { BetaTag } from '../../components/beta';
@@ -39,10 +41,13 @@ const Cipher = (props: { state: appState }) => {
   const result = useStateObj('');
   const time = useStateObj('');
   const history = useHistory();
+  const [base, setBase] = useState<string>("Base85");
+
+  const baseOptions = ['Base16', 'Base32', 'Base64', 'Base85'];
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, {
-      formatting: "Base85",
+      formatting: base,
       in_text: content.value,
       key: factor.value,
       ...time.value ? { in_time: parseInt(time.value) } : {}
@@ -89,6 +94,9 @@ const Cipher = (props: { state: appState }) => {
             else time.value = event.target.value;
           else alert("You must input a whole number as the time.");
         }} />
+      <Select value={base} onChange={(event) => setBase(event.target.value as string)}>
+        {baseOptions.map((option) => (<MenuItem key={option} value={option}>{option}</MenuItem>))}
+      </Select>
     </AdvancedOptionsCard>
   </div>;
 }
