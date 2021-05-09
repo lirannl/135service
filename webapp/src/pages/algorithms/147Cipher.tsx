@@ -51,7 +51,7 @@ const Cipher = (props: { state: appState }) => {
       formatting: base,
       in_text: content.value,
       key: factor.value,
-      ...nonce ? { nonce_type: nonce } : {}
+      nonce_type: nonce,
     });
     resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
