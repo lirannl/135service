@@ -47,15 +47,12 @@ const Cipher = (props: { state: appState }) => {
   const baseOptions = ['Base16', 'Base32', 'Base64', 'Base85'];
 
   const send = async (action: string) => {
-    const body: any = {
+    const res = await sendInput(action, "147cipher", result, loading.set, {
       formatting: base,
       in_text: content.value,
-      key: factor.value
-    };
-    if (action === 'encrypt') {
-      body.nonce_type = nonce
-    }
-    const res = await sendInput(action, "147cipher", result, loading.set, body);
+      key: factor.value,
+      ...nonce ? { nonce_type: nonce } : {}
+    });
     resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
       result.value = res?.result!;
