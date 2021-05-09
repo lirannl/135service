@@ -39,10 +39,11 @@ const Cipher = (props: { state: appState }) => {
   const factor = useStateObj('');
   const content = useStateObj('');
   const result = useStateObj('');
-  const time = useStateObj('');
   const history = useHistory();
+  const [nonce, setNonce] = useState<string>("Time");
   const [base, setBase] = useState<string>("Base85");
 
+  const nonceOptions = ['Time', 'Random', 'Hybrid'];
   const baseOptions = ['Base16', 'Base32', 'Base64', 'Base85'];
 
   const send = async (action: string) => {
@@ -50,7 +51,7 @@ const Cipher = (props: { state: appState }) => {
       formatting: base,
       in_text: content.value,
       key: factor.value,
-      ...time.value ? { in_time: parseInt(time.value) } : {}
+      ...nonce ? { nonce_type: nonce } : {}
     });
     resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
@@ -87,13 +88,9 @@ const Cipher = (props: { state: appState }) => {
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
     <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
     <AdvancedOptionsCard keepMounted>
-      <TextField id="timeField" label="custom time" inputMode="numeric" value={time.value}
-        onChange={event => {
-          if (/^\d*$/.test(event.target.value))
-            if (event.target.value.length > 80) alert("Time number must be up to 80 characters long.");
-            else time.value = event.target.value;
-          else alert("You must input a whole number as the time.");
-        }} />
+      <Select value={nonce} onChange={(event) => setNonce(event.target.value as string)}>
+        {nonceOptions.map((option) => (<MenuItem key={option} value={option}>{option}</MenuItem>))}
+      </Select>
       <br />
       <Select value={base} onChange={(event) => setBase(event.target.value as string)}>
         {baseOptions.map((option) => (<MenuItem key={option} value={option}>{option}</MenuItem>))}
