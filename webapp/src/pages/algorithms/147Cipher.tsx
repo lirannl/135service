@@ -48,7 +48,7 @@ const Cipher = (props: { state: appState }) => {
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, {
-      ...nonce ? { nonce_type: nonce } : {}
+      nonce_type: nonce,
       formatting: base,
       in_text: content.value,
       key: factor.value,
