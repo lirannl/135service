@@ -43,7 +43,7 @@ const CountTool = (props: { state: appState }) => {
         exclude_spaces: excludeSpaces.value,
         case_sensitive: caseSensitive.value
       };
-      await sendInput("charAnalysis", "counttool", result, loading.set, reqArgs);
+      await sendInput("char_analysis", "counttool", result, loading.set, reqArgs);
     }}>
       <div>
         <TextField multiline value={inputString.value} onChange={event => inputString.value = event.target.value} label="Text to analyse" />
