@@ -70,12 +70,12 @@ const BaseTool = (props: { state: appState }) => {
     <form className={classes.root} noValidate autoComplete="off" onSubmit={async (event) => {
       event.preventDefault();
       const reqArgs = {
-        inputString: numberStr.value,
-        inBase: inBase.value,
-        outBase: outBase.value || undefined,
-        inputSet: inputSet.value || undefined,
-        outputSet: outputSet.value || undefined,
-        fracPlaces: accuracy.value || undefined
+        input_string: numberStr.value,
+        in_base: inBase.value,
+        out_base: outBase.value || undefined,
+        input_set: inputSet.value || undefined,
+        output_set: outputSet.value || undefined,
+        frac_places: accuracy.value || undefined
       };
       if (Object.values(reqArgs).some(e => e === '')) {
         alert("The number and input base fields cannot be left empty."); return;

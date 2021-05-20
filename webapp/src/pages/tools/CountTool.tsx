@@ -39,9 +39,9 @@ const CountTool = (props: { state: appState }) => {
     <form className={classes.root} noValidate autoComplete="off" onSubmit={async (event) => {
       event.preventDefault();
       const reqArgs = {
-        inputString: inputString.value,
-        excludeSpaces: excludeSpaces.value,
-        caseSensitive: caseSensitive.value
+        input_string: inputString.value,
+        exclude_spaces: excludeSpaces.value,
+        case_sensitive: caseSensitive.value
       };
       await sendInput("charAnalysis", "counttool", result, loading.set, reqArgs);
     }}>
