@@ -1,7 +1,7 @@
 import { RouterContext } from "koa-router";
 import { readdirSync } from "fs";
 import { run } from "../pybridge";
-import { withoutNulls } from "../utilts";
+import { withoutNulls } from "../utils";
 
 type func = Readonly<{
     category: string;

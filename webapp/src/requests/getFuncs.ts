@@ -7,7 +7,8 @@ export async function getFuncs()
     const response = await fetch(requrl, {
         method: "GET",
         headers: {"Content-Type": "application/json"}
-    });
+    }).catch(() => null);
+    if (!response) return [];
     const resBody = await response.json();
     if (response.status !== 200) return [];
     return resBody as {func: string, category: string}[];

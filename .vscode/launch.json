@@ -17,10 +17,11 @@
             "type": "pwa-node"
         },
         {
-            "type": "chrome",
-            "request": "attach",
-            "name": "Attach to browser",
+            "type": "edge",
+            "request": "launch",
+            "name": "Launch browser",
             "port": 9222,
+            "url": "http://localhost:3000",
             "urlFilter": "http://localhost:3000/*",
             "webRoot": "${workspaceFolder}/webapp"
         },
