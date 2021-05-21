@@ -1,6 +1,7 @@
 import { RouterContext } from "koa-router";
 import { readdirSync } from "fs";
 import { run } from "../pybridge";
+import { withoutNulls } from "../utilts";
 
 type func = Readonly<{
     category: string;
@@ -21,19 +22,20 @@ const subFolderReader = async (funcsPromise: Promise<func[]>, subFolder: string)
     const subfolderFuncs = await Promise.all(files.map(async file => {
         try {
             const { output } = await run(["categorise", file]);
+            if (output == "") return null;
             return {
                 category: output,
                 func: file
-            }
+            };
         }
         catch {
             return {
                 category: "unknown",
                 func: file
-            }
+            };
         }
     }));
-    return (await funcsPromise).concat(subfolderFuncs);
+    return (await funcsPromise).concat(withoutNulls(subfolderFuncs));
 }
 
 // Scan the algorithms folder for algorithms/tools and return their names

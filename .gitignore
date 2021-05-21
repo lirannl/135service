@@ -1,3 +1,4 @@
 .env
 webapp/.eslintcache
 node_API/node_modules
+node_API/package-lock.json
