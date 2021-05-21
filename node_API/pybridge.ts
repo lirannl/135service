@@ -16,7 +16,7 @@ const run = (args: string[], payload?: Object) => new Promise<{ code: number, ou
         const out = filterInternal(subProc.stdout.read() || subProc.stderr.read());
         if (typeof out != "undefined")
             resolve({ code, output: `${out}`.trimEnd() });
-        else reject({ code })
+        else reject({ code });
     };
     subProc.on("close", res);
     subProc.on("exit", res);

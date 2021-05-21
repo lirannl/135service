@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Launch Program",
+            "name": "Launch API",
             "program": "${workspaceFolder}/node_API/index.ts",
             "cwd": "${workspaceFolder}/node_API",
             "envFile": "${workspaceFolder}/.env",
