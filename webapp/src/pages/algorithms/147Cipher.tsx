@@ -8,10 +8,13 @@ import {
 import { useHistory } from 'react-router-dom';
 import { BetaTag } from '../../components/beta';
 import { appState } from '../../App';
-import { capitalise, useStateObj } from '../../utils';
+import { capitalise, stateObj, useStateObj } from '../../utils';
 import { ReadOnlyTextField } from '../../components/resultField';
 import AdvancedOptionsCard from '../../components/advanced_options';
 import { sendInput } from '../../requests/requester';
+
+const nonceTypes = ["Hybrid", "Time", "Random"];
+const baseOptions = ['Base16', 'Base32', 'Base64', 'Base85'];
 
 function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<React.SetStateAction<string>> }) {
   const Field = React.useRef(null as HTMLSpanElement | null);
@@ -33,24 +36,35 @@ function FieldWithPasteButton(props: { text: string, setText: React.Dispatch<Rea
   </span>
 }
 
+const NonceTypeSelector = ({ nonce }: { nonce: stateObj<string> }) => {
+  const shouldBeDisabled = !nonceTypes.includes(nonce.value);
+  const disabledOption = "Custom";
+  return <Select disabled={shouldBeDisabled} value={shouldBeDisabled ? disabledOption : nonce.value}
+    onChange={({ target }) => {
+      nonce.value = (target as unknown as { value: string }).value;
+    }}
+  >
+    {shouldBeDisabled ? <MenuItem value={disabledOption}>{disabledOption}</MenuItem> :
+      nonceTypes.map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)}
+  </Select>
+}
+
 const Cipher = (props: { state: appState }) => {
   const { loading, classes } = props.state;
   const resLabel = useStateObj('Result');
+  const nonceType = useStateObj('Hybrid');
   const factor = useStateObj('');
   const content = useStateObj('');
   const result = useStateObj('');
-  const time = useStateObj('');
   const history = useHistory();
   const [base, setBase] = useState<string>("Base85");
-
-  const baseOptions = ['Base16', 'Base32', 'Base64', 'Base85'];
 
   const send = async (action: string) => {
     const res = await sendInput(action, "147cipher", result, loading.set, {
       formatting: base,
       in_text: content.value,
       key: factor.value,
-      ...time.value ? { in_time: parseInt(time.value) } : {}
+      ...nonceType.value && action === "encrypt" ? { nonce_type: nonceType.value } : {}
     });
     resLabel.value = `${capitalise(action)}ed result`;
     if (res?.response.ok)
@@ -63,7 +77,7 @@ const Cipher = (props: { state: appState }) => {
     <h1 style={{ marginBottom: '-15pt' }}>147Cipher</h1>
     <p className="smallText">Symmetric Encryption Algorithm</p>
     <ButtonGroup variant="outlined" color="secondary" aria-label="contained primary button group" style={{ marginBottom: "20pt" }}>
-      <Button onClick={() => history.push(`/147cipher/about`)}><span style={{marginInlineStart:"0.5ch", marginInlineEnd: "0.5ch"}}>About</span></Button>
+      <Button onClick={() => history.push(`/147cipher/about`)}><span style={{ marginInlineStart: "0.5ch", marginInlineEnd: "0.5ch" }}>About</span></Button>
       <Button onClick={() => window.open('https://github.com/lirannl/135code/blob/master/bin/functions/147cipher.py')}>Source</Button>
     </ButtonGroup>
     <form className={classes.root} noValidate autoComplete="off" onSubmit={event => {
@@ -87,17 +101,20 @@ const Cipher = (props: { state: appState }) => {
     <ReadOnlyTextField result={loading.value ? "Loading..." : result.value || ''} resLabel={resLabel.value} />
     <React.Fragment><br /><CircularProgress color="primary" className={loading.value ? undefined : "hidden"} /></React.Fragment>
     <AdvancedOptionsCard keepMounted>
-      <TextField id="timeField" label="custom time" inputMode="numeric" value={time.value}
-        onChange={event => {
-          if (/^\d*$/.test(event.target.value))
-            if (event.target.value.length > 80) alert("Time number must be up to 80 characters long.");
-            else time.value = event.target.value;
-          else alert("You must input a whole number as the time.");
-        }} />
-      <br />
       <Select value={base} onChange={(event) => setBase(event.target.value as string)}>
         {baseOptions.map((option) => (<MenuItem key={option} value={option}>{option}</MenuItem>))}
-      </Select>
+      </Select><br />
+      <NonceTypeSelector nonce={nonceType} />
+      <br />
+      <TextField type="number" label="nonce"
+        onFocus={({ target }) => { (target as { select: () => void }).select(); }}
+        onInput={({ target }) => {
+          if ((target as unknown as { value: string }).value === "")
+            nonceType.value = "Hybrid"; // When emptying the nonce field, set it to the default type
+          else if (/^\d*$/.test((target as unknown as { value: string }).value))
+            if ((target as unknown as { value: string }).value.length > 80) alert("Nonce must be up to 80 characters long.");
+            else nonceType.value = (target as unknown as { value: string }).value
+        }} />
     </AdvancedOptionsCard>
   </div>;
 }
